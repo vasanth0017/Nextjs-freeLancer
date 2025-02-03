@@ -9,5 +9,5 @@ let client = globalThis.prisma || new PrismaClient()
 if (process.env.NEXT_PUBLIC_ENV === 'development') {
   globalThis.prisma = client
 }
-
+  
 export default client

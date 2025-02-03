@@ -1,16 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import localFont from 'next/font/local'
+import './globals.css'
+import { Toaster } from 'react-hot-toast'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const satoshiFont = localFont({
+  src: [
+    {
+      path: '../public/font/Satoshi-Medium.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/font/Satoshi-Medium.otf',
+      weight: '600',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-satoshi',
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,10 +32,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+     <body className={satoshiFont.className}>
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+        />
+          {children}
       </body>
     </html>
   );
