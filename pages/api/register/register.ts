@@ -5,13 +5,19 @@ const handler = async(req:any, res:any)=> {
   console.log("req",req.body);
   if (req.method !== "POST") return res.status(405).end();
   
-  const { email, password, role } = req.body;
+  const { email, password, role, name, image } = req.body;
   console.log("data",email, password, role);
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
     const user = await db.user.create({
-      data: { email, password: hashedPassword, role: role || "user" },
+      data: { 
+        name, 
+        email, 
+        password: hashedPassword, 
+        role: role || "user", 
+        image 
+      },
     });
     res.status(201).json(user);
     console.log("user",user);
