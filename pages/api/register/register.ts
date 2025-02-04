@@ -2,7 +2,6 @@ import db from "@/prisma/db";
 import bcrypt from "bcrypt";
 
 const handler = async(req:any, res:any)=> {
-  console.log("req",req.body);
   if (req.method !== "POST") return res.status(405).end();
   
   const { email, password, role, name, image } = req.body;

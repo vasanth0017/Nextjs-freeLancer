@@ -44,6 +44,8 @@ model User {
   role                 String?   @default("user")
   resetToken           String?  
   resetTokenExpiry     DateTime?
+  phoneNumber          String?   // Optional field (default is null)
+  address              String?   // Optional field (default is null)
   accounts      Account[]
   sessions      Session[]
 }

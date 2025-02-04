@@ -14,3 +14,13 @@ export const forgotPassword = async (email:any) => {
 export const resetPassword = async ( token:any, newPassword :any) => {
   return await Fetch.postJSON('/auth/reset-password', { token, newPassword })
 }
+
+//get account details
+export const getAccountDetails = async ( email:any) => {
+  return await Fetch.getJSON(`/user-account/get?email=${email}`)
+}
+
+//update account details
+export const UpdateAccountDetails = async ({id, email, name, phoneNumber, address}:any) => {
+  return await Fetch.updateJSON('/user-account/update',{id, email, name, phoneNumber, address})
+}
