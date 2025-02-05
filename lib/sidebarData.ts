@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { title } from "process";
 
+
 export const sidebarData = {
     user: {
       name: "Morgan",
@@ -27,7 +28,7 @@ export const sidebarData = {
     navMain: [
       {
         title: "Dashboard",
-        url: "#",
+        url: "dashboard",
         icon: SquareTerminal,
         isActive: true,
         // items: [
@@ -63,6 +64,17 @@ export const sidebarData = {
         //     url: "#",
         //   },
         // ],
+      },
+      {
+        title: "Service Listing",
+        url: "/service-listing",
+        icon: BookOpen,
+        items: [
+          {
+            title: "Your Service",
+            url: "/my-services",
+          },
+        ]
       },
       {
         title: "Documentation",

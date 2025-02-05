@@ -46,8 +46,9 @@ model User {
   resetTokenExpiry     DateTime?
   phoneNumber          String?   // Optional field (default is null)
   address              String?   // Optional field (default is null)
-  accounts      Account[]
-  sessions      Session[]
+  accounts             Account[]
+  sessions             Session[]
+  services             FreelancerService[] @relation("freelauncerService")
 }
 
 model VerificationToken {
@@ -57,4 +58,29 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model FreelancerService {
+  id             String   @id @default(uuid()) @map("_id")  // Unique ID for each service
+  name           String
+  email          String   @unique
+  address        String
+  state          String
+  country        String
+  linkedin       String?  // Optional LinkedIn profile
+  phoneNumber    String   @unique
+  age            Int
+
+  categories     String   // Can be stored as a comma-separated string or as a relation
+  projectTitle   String
+  projectDescription String
+  url            String?  // Optional project URL
+
+  createdAt      DateTime @default(now())
+  status         String   @default("pending") // e.g., pending, active, completed
+  amount         Float
+
+  // Optional relationship to a User model if needed
+  userId         String?
+  user           User? @relation("freelauncerService", fields: [userId], references: [id], onDelete: Cascade)
 }
