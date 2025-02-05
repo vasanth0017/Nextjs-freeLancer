@@ -54,7 +54,6 @@ const handler = async (req: any, res: any) => {
 
     // Add error handling for the email sending
     const info = await transporter.sendMail(mailOptions);
-    console.log('Message sent: %s', info.messageId);
 
     res.json({ message: "Reset link sent to email" });
   } catch (error:any) {

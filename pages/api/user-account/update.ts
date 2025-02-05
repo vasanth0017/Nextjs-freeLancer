@@ -25,7 +25,6 @@ const handler = async (req: any, res: any) => {
         },
       })
     res.status(201).json(updatedEntry);
-    console.log("user", updatedEntry);
   } catch (error) {
     res.status(500).json({ error: "accont details fetch failed" });
   }

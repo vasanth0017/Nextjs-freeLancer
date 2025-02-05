@@ -1,7 +1,6 @@
 import db from "@/prisma/db";
 
 const handler = async (req: any, res: any) => {
-  console.log("req", req.body);
   if (req.method !== "GET") return res.status(405).end();
   const email = req.query.email as string;
 
@@ -10,7 +9,7 @@ const handler = async (req: any, res: any) => {
       where: {email:email},
     });
     res.status(201).json(user);
-    console.log("user", user);
+
   } catch (error) {
     res.status(500).json({ error: "accont details fetch failed" });
   }

@@ -33,7 +33,6 @@ export default function Register() {
       return;
     }
     try {
-      console.log({ email });
       await registerNewuser({ email, password, role, name, image: null });
       toast.success("Account created successfully");
     } catch (error:any) {
