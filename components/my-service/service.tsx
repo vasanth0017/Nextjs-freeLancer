@@ -49,7 +49,7 @@ export default function MyServices({
       router.push("/service-listing");
     } else if (action === "addService") {
       setRedirectLoadpage(true);
-      router.push("/create-service");
+      router.push("/manage-service");
     }
   };
   useEffect(() => {
