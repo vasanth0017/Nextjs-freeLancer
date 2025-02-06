@@ -50,10 +50,10 @@ model User {
   sessions             Session[]
   services             FreelancerService[] @relation("freelauncerService")
 }
-
+ 
 model VerificationToken {
   id         String   @id @default(cuid()) @map("_id")
-  identifier String
+  identifier String 
   token      String   @unique
   expires    DateTime
 
@@ -63,12 +63,12 @@ model VerificationToken {
 model FreelancerService {
   id             String   @id @default(uuid()) @map("_id")  // Unique ID for each service
   name           String
-  email          String   @unique
+  email          String   
   address        String
   state          String
   country        String
   linkedin       String?  // Optional LinkedIn profile
-  phoneNumber    String   @unique
+  phoneNumber    String   
   age            Int
 
   categories     String   // Can be stored as a comma-separated string or as a relation

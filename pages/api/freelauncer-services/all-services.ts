@@ -1,7 +1,6 @@
 import db from "@/prisma/db";
 
 const handler = async (req: any, res: any) => {
-  console.log("request", req);
   
   if (req.method !== "GET") return res.status(405).end();
 

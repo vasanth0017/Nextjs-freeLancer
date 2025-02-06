@@ -83,7 +83,7 @@ export default function Register() {
             <Label htmlFor="role">Role</Label>
             <select id="role" value={role} onChange={(e) => setRole(e.target.value)} className="w-full border rounded-lg p-2">
               <option value="user">User</option>
-              <option value="admin">Admin</option>
+              <option value="freelancer">freelancer</option>
             </select>
           </div>
 

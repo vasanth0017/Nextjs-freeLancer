@@ -12,6 +12,7 @@ import {
   UserPlus,
   Webhook,
   Plus,
+  ArrowLeft,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import Link from "next/link";
@@ -31,7 +32,6 @@ import {
 import { DropdownMenuLabel } from "../ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 
-
 export default function MyServices({
   email,
   userId,
@@ -42,11 +42,19 @@ export default function MyServices({
   const [users, setUsers] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter()
+  const [redirectLoad, setRedirectLoad] = useState(false);
+  const [redirectLoadpage, setRedirectLoadpage] = useState(false)
+  const router = useRouter();
   //handle router
-  const handleRedirect = () => {
-    router.push('/manage-service')
-  }
+  const handleRedirect = (action: "serviceList" | "addService") => {
+    if (action === "serviceList") {
+      setRedirectLoad(true);
+      router.push("/service-listing");
+    } else if (action === "addService") {
+      setRedirectLoadpage(true);
+      router.push("/create-service");
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -74,11 +82,29 @@ export default function MyServices({
 
   return (
     <>
-      <div className="p-3 justify-items-end  w-full ">
-        <Button 
-         onClick={handleRedirect}>  
-         <Plus />
-         Add Service</Button>
+      <div className="p-3 flex justify-between  w-full ">
+        <Button
+          onClick={() => handleRedirect("serviceList")}
+          className="flex items-center gap-2"
+        >
+          <ArrowLeft className="h-4 w-4 mr-1 " />
+          {redirectLoad ? (
+            <Loader className="animate-spin w-5 h-5" />
+          ) : (
+            "Service List"
+          )}
+        </Button>
+        <Button
+          onClick={() => handleRedirect("addService")}
+          className="flex items-center gap-2"
+        >
+          <Plus />
+          {redirectLoadpage ? (
+            <Loader className="animate-spin w-5 h-5" />
+          ) : (
+            "Add service"
+          )}
+        </Button>
       </div>
       <div className="grid grid-cols-1 p-3 gap-6 md:grid-cols-2 lg:grid-cols-3 mt-10">
         {users.flatMap((user) =>
@@ -108,7 +134,9 @@ export default function MyServices({
                   <DropdownMenuContent>
                     <DropdownMenuSeparator />
                     <Link href={`/manage-service?serviceId=${service.id} `}>
-                      <DropdownMenuItem className="p-1 mt-1">Manage</DropdownMenuItem>
+                      <DropdownMenuItem className="p-1 mt-1">
+                        Manage
+                      </DropdownMenuItem>
                     </Link>
                   </DropdownMenuContent>
                 </DropdownMenu>

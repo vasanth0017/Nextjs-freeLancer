@@ -22,7 +22,8 @@ export default function ServiceForm({ userId }: { userId: string }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  console.log(serviceData);
+  const [redirectLoad, setRedirectLoad] = useState(false);
+  //fetch saved service details
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -105,6 +106,10 @@ export default function ServiceForm({ userId }: { userId: string }) {
     }
     setLoading(false);
   };
+  const handleredirect = () => {
+    setRedirectLoad(true)
+    router.back();
+  };
 
   if (serviceId && isLoading) {
     return (
@@ -124,9 +129,13 @@ export default function ServiceForm({ userId }: { userId: string }) {
             <h1 className="text-3xl font-bold text-gray-800 mb-6">
               {serviceId ? "Edit Service Details" : "Create Your Service"}
             </h1>
-            <Button variant="secondary" onClick={() => router.back()}>
+            <Button variant="secondary" onClick={handleredirect}>
               <ArrowLeft className="h-4 w-4 mr-1 " />
-              Back
+              {redirectLoad ? (
+                <Loader className="animate-spin w-5 h-5" />
+              ) : (
+                "Back"
+              )}
             </Button>
           </div>
 
@@ -144,7 +153,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
                     placeholder="Enter name"
                     value={serviceData.name || ""}
                     onChange={handleChange}
-                    className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
                   />
                 </div>
                 <div>
@@ -154,28 +163,30 @@ export default function ServiceForm({ userId }: { userId: string }) {
                     placeholder="Enter email address"
                     value={serviceData.email || ""}
                     onChange={handleChange}
-                    className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
                   />
                 </div>
-                <div>
-                  <Label className="text-gray-600 mb-2">Phone Number</Label>
-                  <Input
-                    name="phoneNumber"
-                    placeholder="Enter phone number"
-                    value={serviceData.phoneNumber || ""}
-                    onChange={handleChange}
-                    className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
-                  />
-                </div>
-                <div>
-                  <Label className="text-gray-600 mb-2">Enter Your Age</Label>
-                  <Input
-                    name="age"
-                    placeholder="Enter your Age"
-                    value={serviceData.age || ""}
-                    onChange={handleChange}
-                    className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
-                  />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="text-gray-600 mb-2">Phone Number</Label>
+                    <Input
+                      name="phoneNumber"
+                      placeholder="Enter phone number"
+                      value={serviceData.phoneNumber || ""}
+                      onChange={handleChange}
+                      className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-gray-600 mb-2">Enter Your Age</Label>
+                    <Input
+                      name="age"
+                      placeholder="Enter your Age"
+                      value={serviceData.age || ""}
+                      onChange={handleChange}
+                      className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -193,7 +204,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
                     placeholder="Enter full address"
                     value={serviceData.address || ""}
                     onChange={handleChange}
-                    className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -204,7 +215,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
                       placeholder="Enter state"
                       value={serviceData.state || ""}
                       onChange={handleChange}
-                      className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                      className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
                     />
                   </div>
                   <div>
@@ -214,7 +225,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
                       placeholder="Enter country"
                       value={serviceData.country || ""}
                       onChange={handleChange}
-                      className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                      className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
                     />
                   </div>
                 </div>
@@ -225,7 +236,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
                     placeholder="Enter LinkedIn URL"
                     value={serviceData.linkedin || ""}
                     onChange={handleChange}
-                    className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
                   />
                 </div>
               </div>
@@ -244,7 +255,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
                     placeholder="Enter project title"
                     value={serviceData.projectTitle || ""}
                     onChange={handleChange}
-                    className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
                   />
                 </div>
                 <div>
@@ -254,7 +265,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
                     placeholder="Enter project URL"
                     value={serviceData.url || ""}
                     onChange={handleChange}
-                    className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
                   />
                 </div>
                 <div className="md:col-span-2">
@@ -266,14 +277,14 @@ export default function ServiceForm({ userId }: { userId: string }) {
                     placeholder="Describe your project"
                     value={serviceData.projectDescription || ""}
                     onChange={handleChange}
-                    className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
                   />
                 </div>
               </div>
             </div>
 
             {/* Additional Details */}
-            <div className="grid grid-cols-2 gap-6 md:col-span-2">
+            <div className="grid grid-cols-3 gap-6 md:col-span-2">
               <div>
                 <Label className="text-gray-600 mb-2">Categories</Label>
                 <Input
@@ -281,7 +292,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
                   placeholder="Enter categories"
                   value={serviceData.categories || ""}
                   onChange={handleChange}
-                  className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                  className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
                 />
               </div>
               <div>
@@ -291,17 +302,17 @@ export default function ServiceForm({ userId }: { userId: string }) {
                   placeholder="Enter project status"
                   value={serviceData.status || ""}
                   onChange={handleChange}
-                  className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                  className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
                 />
               </div>
               <div>
-                <Label className="text-gray-600 mb-2">Status</Label>
+                <Label className="text-gray-600 mb-2">Amount</Label>
                 <Input
                   name="amount"
                   placeholder="Enter amount"
                   value={serviceData.amount || ""}
                   onChange={handleChange}
-                  className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                  className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
                 />
               </div>
             </div>
@@ -311,7 +322,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
               {serviceId ? (
                 <Button
                   onClick={handleSave}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-all"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl transition-all"
                 >
                   {loading ? (
                     <Loader className="animate-spin w-5 h-5" />
@@ -322,7 +333,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
               ) : (
                 <Button
                   onClick={handleCreate}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-all"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl transition-all"
                 >
                   {loading ? (
                     <Loader className="animate-spin w-5 h-5" />

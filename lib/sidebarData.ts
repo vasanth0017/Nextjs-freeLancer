@@ -12,8 +12,8 @@ import {
 } from "lucide-react";
 import { title } from "process";
 
-
-export const sidebarData = {
+export  function sidebarData  (session: any) {
+  return {
     user: {
       name: "Morgan",
       email: "m@example.com",
@@ -69,12 +69,14 @@ export const sidebarData = {
         title: "Service Listing",
         url: "/service-listing",
         icon: BookOpen,
-        items: [
-          {
-            title: "Your Service",
-            url: "/my-services",
-          },
-        ]
+        ...(session?.user?.role === "freelancer" && {
+          items: [
+            {
+              title: "Your Service",
+              url: "/my-services",
+            },
+          ],
+        }),
       },
       {
         title: "Documentation",
@@ -141,3 +143,4 @@ export const sidebarData = {
       },
     ],
   }
+}

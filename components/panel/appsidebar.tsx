@@ -16,17 +16,18 @@ import { sidebarData } from "@/lib/sidebarData"
 
 
 export function AppSidebar({session,  ...props }:{session:any} & React.ComponentProps<typeof Sidebar>) {
+  const data:any = sidebarData(session);
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={sidebarData.teams} />
+        <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={sidebarData.navMain} />
+        <NavMain items={data.navMain} />
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={session?.user || sidebarData.user} />
+        <NavUser user={session?.user || data.user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
