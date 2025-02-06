@@ -3,7 +3,6 @@ import db from "@/prisma/db";
 const handler = async (req: any, res: any) => {
   if (req.method !== "GET") return res.status(405).end();
   const email = req.query.email as string;
-  console.log(email)
   try {
     const user = await db.user.findMany({
       where: {email:email},

@@ -12,7 +12,6 @@ export default function UserDetail({ email }: { email: string }) {
   const[isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null);
   const [editIndex, setEditIndex] = useState<number | null>(null);
-  console.log("user",users)
   useEffect(() => {
     const fetchData = async () => {
       try {

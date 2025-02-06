@@ -8,11 +8,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import toast from "react-hot-toast";
 import {
   addServiceList,
+  deleteService,
   getServiceDetails,
   updateServiceDetail,
 } from "@/services/apicall";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, Loader } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 
 export default function ServiceForm({ userId }: { userId: string }) {
   const searchParams = useSearchParams();
@@ -23,6 +32,10 @@ export default function ServiceForm({ userId }: { userId: string }) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [redirectLoad, setRedirectLoad] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
+    null
+  );
   //fetch saved service details
   useEffect(() => {
     const fetchData = async () => {
@@ -107,8 +120,22 @@ export default function ServiceForm({ userId }: { userId: string }) {
     setLoading(false);
   };
   const handleredirect = () => {
-    setRedirectLoad(true)
+    setRedirectLoad(true);
     router.back();
+  };
+  //handle delete
+  const handleDelete = async () => {
+    const serviceId = selectedServiceId;
+    try {
+      setLoading(true);
+      await deleteService(serviceId);
+      toast.success("Service Deleted Successfully");
+      setDialogOpen(false);
+      setSelectedServiceId(null);
+      router.push("/my-services");
+    } catch {
+      toast.error("Error Deleting Service");
+    }
   };
 
   if (serviceId && isLoading) {
@@ -320,16 +347,59 @@ export default function ServiceForm({ userId }: { userId: string }) {
             {/* Save Button */}
             <div className="md:col-span-2 mt-6">
               {serviceId ? (
-                <Button
-                  onClick={handleSave}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl transition-all"
-                >
-                  {loading ? (
-                    <Loader className="animate-spin w-5 h-5" />
-                  ) : (
-                    "Save changes"
-                  )}
-                </Button>
+                <>
+                  <div className="flex justify-between w-full">
+                    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                      <DialogTrigger asChild>
+                        <Button
+                          onClick={() => setSelectedServiceId(serviceData.id)}
+                          variant="destructive"
+                        >
+                          Delete This Service
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-[440px]">
+                        <DialogHeader>
+                          <DialogTitle>
+                            Are you sure you want to delete this Service?
+                          </DialogTitle>
+                        </DialogHeader>
+                        <div className="grid gap-4 py-4">
+                          <div className="grid grid-cols-4 gap-2 items-center "></div>
+                        </div>
+                        <DialogFooter>
+                          <Button
+                            className="px-3 py-1 h-10 w-20 rounded-md"
+                            onClick={handleDelete}
+                          >
+                            {loading ? (
+                              <Loader className="animate-spin w-5 h-5" />
+                            ) : (
+                              "Yes"
+                            )}
+                          </Button>
+                          <Button
+                            variant="secondary"
+                            className="px-3 py-1 h-10 w-20 rounded-md"
+                            onClick={() => setDialogOpen(false)}
+                          >
+                            No
+                          </Button>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
+                    <Button
+                      onClick={handleSave}
+                      className="bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl transition-all"
+                    >
+                      {loading ? (
+                        <Loader className="animate-spin w-5 h-5" />
+                      ) : (
+                        "Save changes"
+                      )}
+                    </Button>
+                  </div>
+                </>
               ) : (
                 <Button
                   onClick={handleCreate}

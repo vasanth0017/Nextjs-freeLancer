@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import FreelancerModal from "../freelauncer-portfolio/potfolio";
 
 export default function AlluserService() {
   const [users, setUsers] = useState<any[]>([]);
@@ -21,6 +22,8 @@ export default function AlluserService() {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [redirectLoad, setRedirectLoad] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState(null);
   const router = useRouter();
   //handle router
   const handleRedirect = () => {
@@ -28,6 +31,13 @@ export default function AlluserService() {
     router.push("/dashboard");
     setRedirectLoad(false);
   };
+ 
+  //handle portfoli
+  const handlePortfolioClick = (service: any) => {
+    setSelectedService(service);
+    setIsModalOpen(true);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,7 +59,7 @@ export default function AlluserService() {
     const query = searchQuery.toLowerCase();
     return (
       searchQuery === "" ||
-      service.amount.toString().includes(query) || 
+      service.amount.toString().includes(query) ||
       service.address?.toLowerCase().includes(query) ||
       service.country?.toLowerCase().includes(query) ||
       service.projectTitle?.toLowerCase().includes(query)
@@ -146,15 +156,16 @@ export default function AlluserService() {
 
                       <div className="flex flex-col gap-3">
                         <a
-                          href={service.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handlePortfolioClick(service);
+                          }}
                           className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors"
                         >
                           View Portfolio
                           <ExternalLink className="w-4 h-4" />
                         </a>
-
                         <Button
                           variant="outline"
                           className="w-full group-hover:bg-blue-600 group-hover:text-white transition-all duration-300"
@@ -172,6 +183,13 @@ export default function AlluserService() {
               </p>
             )}
           </div>
+          {selectedService && (
+            <FreelancerModal
+              data={selectedService}
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+            />
+          )}
         </>
       )}
     </>

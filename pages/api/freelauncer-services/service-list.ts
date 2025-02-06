@@ -20,22 +20,7 @@ const handler = async(req:any, res:any)=> {
     amount,
     userId
   } = req.body;
-  console.log(name,
-    email,
-    address,
-    state,
-    country,
-    linkedin,
-    phoneNumber,
-    age,
-    categories, 
-    projectTitle,
-    projectDescription,
-    url,
-    status,
-    amount,
-    userId)
-
+ 
   try {
     const Service = await db.freelancerService.create({
       data: { 

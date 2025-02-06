@@ -112,3 +112,8 @@ export const updateServiceDetail = async (
 export const getAllUserService = async ( ) => {
   return await Fetch.getJSON('/freelauncer-services/all-services')
 }
+
+//delete service
+export const deleteService = async ( serviceId:any) => {
+  return await Fetch.deleteJSON('/freelauncer-services/delete-service', {serviceId})
+}
