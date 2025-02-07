@@ -22,7 +22,8 @@ const satoshiFont = localFont({
 
 export const metadata: Metadata = {
   title: "Free Launcer Market",
-  description: "Use this marketplace to offer your services and attract clients instantly.",
+  description:
+    "Use this marketplace to offer your services and attract clients instantly.",
 };
 
 export default function RootLayout({
@@ -31,7 +32,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" >
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className="bg-[hsl(var(--sidebar-background))]"
+    >
       <body className={satoshiFont.className}>
         <ThemeProvider
           attribute="class"
