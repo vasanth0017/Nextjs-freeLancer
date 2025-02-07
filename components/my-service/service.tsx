@@ -93,6 +93,7 @@ export default function MyServices({
         <>
           <div className="p-3 flex justify-between  w-full ">
             <Button
+              variant="secondary"
               onClick={() => handleRedirect("serviceList")}
               className="flex items-center gap-2"
             >
@@ -127,7 +128,7 @@ export default function MyServices({
                 user.services.map((service: any, index: number) => (
                   <Card
                     key={index}
-                    className="relative group hover:shadow-xl transition-all duration-300 border-0 bg-white/50 backdrop-blur-lg p-6 rounded-xl shadow-lg"
+                    className="relative group hover:shadow-xl transition-all duration-300 border-0 bg-secondary backdrop-blur-lg p-6 rounded-xl shadow-lg"
                   >
                     {/* Email Initials */}
                     <div className="absolute -top-4 left-4 flex items-center justify-center h-12 w-12 rounded-full bg-blue-500 text-white font-bold text-lg shadow-md border-4 border-white">
@@ -153,7 +154,7 @@ export default function MyServices({
                           align="end"
                           forceMount
                         >
-                          <DropdownMenuItem className="hover:cursor-pointer flex items-center h-4 mb-1">
+                          <DropdownMenuItem className="hover:cursor-pointer  h-8">
                             <Link
                               href={`/manage-service?serviceId=${service.id} `}
                               className="flex items-center"
@@ -162,14 +163,13 @@ export default function MyServices({
                               <span>Manage</span>
                             </Link>
                           </DropdownMenuItem>
-                          <DropdownMenuSeparator />
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
                     {/* Card Header */}
                     <CardHeader className="pb-4 mt-6">
                       <div className="flex flex-col gap-2">
-                        <CardTitle className="text-xl font-bold text-gray-800 truncate">
+                        <CardTitle className="text-xl font-bold truncate">
                           {service.projectTitle}
                         </CardTitle>
                         <span
@@ -208,8 +208,7 @@ export default function MyServices({
                         </a>
 
                         <Button
-                          variant="outline"
-                          className="w-full group-hover:bg-blue-600 group-hover:text-white transition-all duration-300"
+                          className="w-full transition-all duration-300"
                         >
                           View Details
                         </Button>

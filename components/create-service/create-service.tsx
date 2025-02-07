@@ -13,7 +13,7 @@ import {
   updateServiceDetail,
 } from "@/services/apicall";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ArrowLeft, Loader } from "lucide-react";
+import { ArrowLeft, Loader, X } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -36,6 +36,25 @@ export default function ServiceForm({ userId }: { userId: string }) {
   const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
     null
   );
+  const [skills, setSkills] = useState<string[]>([]);
+  const [input, setInput] = useState("");
+  console.log(skills);
+
+  //add skills
+  const addSkill = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && input.trim() !== "") {
+      e.preventDefault();
+      setSkills([...skills, input.trim()]);
+
+      setInput("");
+    }
+  };
+
+  const removeSkill = (index: number) => {
+    const newSkills = skills.filter((_, i) => i !== index);
+    setSkills(newSkills);
+  };
+
   //fetch saved service details
   useEffect(() => {
     const fetchData = async () => {
@@ -47,6 +66,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
           : Object.values(response).find((obj: any) => obj.id);
 
         setServiceData(validData || {});
+        setSkills(validData?.skills || []);
       } catch (error) {
         setError("Error fetching service details.");
         console.error("Fetch error:", error);
@@ -69,6 +89,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
       await updateServiceDetail({
         serviceId,
         ...serviceData,
+        skills,
       });
       toast.success("Service details updated successfully!");
     } catch (error) {
@@ -110,6 +131,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
         url,
         status,
         amount,
+        skills,
         userId,
       });
       toast.success("Service details created successfully!");
@@ -296,9 +318,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <Label className=" mb-2">
-                    Project Description
-                  </Label>
+                  <Label className=" mb-2">Project Description</Label>
                   <Input
                     name="projectDescription"
                     placeholder="Describe your project"
@@ -343,7 +363,35 @@ export default function ServiceForm({ userId }: { userId: string }) {
                 />
               </div>
             </div>
+            <div className="grid grid-col-1 border rounded-lg p-6 w-full  space-y-4 shadow-sm">
+              <div className="flex flex-wrap gap-3 ">
+                {skills.map((skill, index) => (
+                  <span
+                    key={index}
+                    className="bg-background px-4 py-2 rounded-full flex items-center gap-2  transition-colors"
+                  >
+                    {skill}
+                    <button
+                      type="button"
+                      onClick={() => removeSkill(index)}
+                      className="hover:bg-gray-300 rounded-full p-1 transition-colors"
+                      aria-label={`Remove ${skill}`}
+                    >
+                      <X className="h-4 w-4 text-gray-600" />
+                    </button>
+                  </span>
+                ))}
+              </div>
 
+              <Input
+                type="text"
+                className="w-full p-3 text-lg"
+                placeholder="Type a skill and press Enter..."
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={addSkill}
+              />
+            </div>
             {/* Save Button */}
             <div className="md:col-span-2 mt-6">
               {serviceId ? (
@@ -390,7 +438,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
                     </Dialog>
                     <Button
                       onClick={handleSave}
-                      className="bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-all"
+                      className="py-3 rounded-lg transition-all"
                     >
                       {loading ? (
                         <Loader className="animate-spin w-5 h-5" />
@@ -403,7 +451,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
               ) : (
                 <Button
                   onClick={handleCreate}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-all"
+                  className="w-full py-3 rounded-lg transition-all"
                 >
                   {loading ? (
                     <Loader className="animate-spin w-5 h-5" />

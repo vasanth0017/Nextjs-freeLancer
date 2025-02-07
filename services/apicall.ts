@@ -42,6 +42,7 @@ export const addServiceList = async (
     url,
     status,
     amount,
+    skills,
     userId
   }:any
 ) => {
@@ -60,6 +61,7 @@ export const addServiceList = async (
       url,
       status,
       amount,
+      skills,
       userId
     
    })
@@ -87,7 +89,8 @@ export const updateServiceDetail = async (
     projectDescription,
     url,
     status,
-    amount
+    amount,
+    skills
   }:any) => {
   return await Fetch.updateJSON('/freelauncer-services/update-service', {
       serviceId, 
@@ -104,7 +107,9 @@ export const updateServiceDetail = async (
       projectDescription,
       url,
       status,
-      amount
+      amount,
+      skills
+
   })
 }
 

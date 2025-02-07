@@ -18,6 +18,7 @@ const handler = async(req:any, res:any)=> {
     url,
     status,
     amount,
+    skills,
     userId
   } = req.body;
  
@@ -38,6 +39,7 @@ const handler = async(req:any, res:any)=> {
         url,
         status,
         amount: parseFloat(amount),
+        skills,
         userId
       },
     });

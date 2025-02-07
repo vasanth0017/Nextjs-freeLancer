@@ -29,7 +29,6 @@ export default function AlluserService() {
   const handleRedirect = () => {
     setRedirectLoad(true);
     router.push("/dashboard");
-    setRedirectLoad(false);
   };
  
   //handle portfoli
@@ -62,7 +61,8 @@ export default function AlluserService() {
       service.amount.toString().includes(query) ||
       service.address?.toLowerCase().includes(query) ||
       service.country?.toLowerCase().includes(query) ||
-      service.projectTitle?.toLowerCase().includes(query)
+      service.projectTitle?.toLowerCase().includes(query) ||
+      service.skills?.some((skill:any) => skill.toLowerCase().trim().includes(query.trim()))
     );
   });
 
@@ -99,7 +99,7 @@ export default function AlluserService() {
               />
             </div>
           </div>
-          <div className="grid grid-cols-1 p-3 gap-10 md:grid-cols-2 lg:grid-cols-3 mt-10">
+          <div className="grid grid-cols-1 p-3 gap-10 lg:gap-6 md:grid-cols-2 lg:grid-cols-3 mt-10">
             {filteredUsers.length > 0 ? (
               filteredUsers.map((service: any, index: number) => {
                 const colors = [
@@ -113,7 +113,7 @@ export default function AlluserService() {
                 return (
                   <Card
                     key={index}
-                    className="relative group hover:shadow-xl transition-all duration-300 border-0 bg-secondary backdrop-blur-lg p-6 rounded-xl shadow-lg"
+                    className="relative group hover:shadow-2xl transition-all duration-300 border-0 bg-secondary backdrop-blur-lg p-6 rounded-xl shadow-lg"
                   >
                     {/* Email Initials */}
 

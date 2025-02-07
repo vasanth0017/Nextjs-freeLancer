@@ -19,7 +19,8 @@ const handler = async (req: any, res: any) => {
     projectDescription,
     url,
     status,
-    amount
+    amount,
+    skills
   } = req.body;
 
   // Validate serviceId
@@ -44,7 +45,8 @@ const handler = async (req: any, res: any) => {
         projectDescription,
         url,
         status,
-        amount: amount ? parseFloat(amount) : undefined
+        amount: amount ? parseFloat(amount) : undefined,
+        skills
       },
     });
 

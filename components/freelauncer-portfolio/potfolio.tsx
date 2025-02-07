@@ -1,7 +1,8 @@
-import React from 'react';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Mail, MapPin, Phone, Linkedin, DollarSign, X } from 'lucide-react';
+import React from "react";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Mail, MapPin, Phone, Linkedin, DollarSign, X } from "lucide-react";
+import { Button } from "../ui/button";
 
 interface FreelancerData {
   name: string;
@@ -17,6 +18,7 @@ interface FreelancerData {
   url: string;
   status: string;
   amount: number;
+  skills: string[];
 }
 
 interface ModalProps {
@@ -29,27 +31,32 @@ export default function FreelancerModal({ data, isOpen, onClose }: ModalProps) {
   if (!isOpen) return null;
 
   const getInitials = (name: string) => {
-    return name.split(' ').map(word => word[0]).join('').toUpperCase().slice(0, 2);
+    return name
+      .split(" ")
+      .map((word) => word[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop with blur effect */}
-      <div 
+      <div
         className="absolute inset-0 bg-black/90 backdrop-blur-sm"
         onClick={onClose}
       />
-      
+
       {/* Modal Content */}
       <div className="relative w-full max-w-4xl mx-4 z-50">
         <Card className="bg-tranparent backdrop-blur-md shadow-xl overflow-hidden">
           {/* Close Button */}
-          <button 
+          <Button
             onClick={onClose}
             className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
           >
             <X className="h-6 w-6" />
-          </button>
+          </Button>
 
           <div className="p-8">
             {/* Header */}
@@ -63,7 +70,10 @@ export default function FreelancerModal({ data, isOpen, onClose }: ModalProps) {
                   <Badge className="bg-blue-500/80 hover:bg-blue-500/90 text-white">
                     {data.categories}
                   </Badge>
-                  <Badge variant="outline" className="border-green-500/50 text-white bg-green-50/50">
+                  <Badge
+                    variant="outline"
+                    className="border-green-500/50 text-white bg-green-50/50"
+                  >
                     {data.status}
                   </Badge>
                 </div>
@@ -86,17 +96,36 @@ export default function FreelancerModal({ data, isOpen, onClose }: ModalProps) {
               </div>
               <div className="flex items-center gap-3">
                 <Linkedin className="h-5 w-5 text-blue-500" />
-                <a href={data.linkedin} target='_window' className="text-blue-600 hover:underline">
+                <a
+                  href={data.linkedin}
+                  target="_window"
+                  className="text-blue-600 hover:underline"
+                >
                   LinkedIn Profile
                 </a>
               </div>
             </div>
-
+            {/* skills */}
+            <h2 className="text-2xl font-semibold text-white">Skills</h2>
+            <div className="flex flex-row gap-3 mt-2">
+              {data?.skills?.map((skill: string, index: number) => (
+                <Card
+                  key={index}
+                  className="bg-background px-4 py-2 rounded-full w-fit items-center gap-2 transition-colors"
+                >
+                  {skill}
+                </Card>
+              ))}
+            </div>
             {/* Project Details */}
-            <div className="space-y-4">
-              <h2 className="text-2xl font-semibold text-white">Featured Project</h2>
+            <div className="space-y-4 mt-3">
+              <h2 className="text-2xl font-semibold text-white">
+                Featured Project
+              </h2>
               <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm">
-                <h3 className="text-xl font-semibold text-white mb-3">{data.projectTitle}</h3>
+                <h3 className="text-xl font-semibold text-white mb-3">
+                  {data.projectTitle}
+                </h3>
                 <p className="text-white mb-4">{data.projectDescription}</p>
                 <div className="flex flex-wrap gap-4">
                   <div className="flex items-center gap-2">

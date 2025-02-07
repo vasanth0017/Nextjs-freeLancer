@@ -44,8 +44,8 @@ model User {
   role                 String?   @default("user")
   resetToken           String?  
   resetTokenExpiry     DateTime?
-  phoneNumber          String?   // Optional field (default is null)
-  address              String?   // Optional field (default is null)
+  phoneNumber          String?   
+  address              String?   
   accounts             Account[]
   sessions             Session[]
   services             FreelancerService[] @relation("freelauncerService")
@@ -61,23 +61,23 @@ model VerificationToken {
 }
 
 model FreelancerService {
-  id             String   @id @default(uuid()) @map("_id")  // Unique ID for each service
+  id             String   @id @default(uuid()) @map("_id")  
   name           String
   email          String   
   address        String
   state          String
   country        String
-  linkedin       String?  // Optional LinkedIn profile
+  linkedin       String?  
   phoneNumber    String   
   age            Int
 
   categories     String   // Can be stored as a comma-separated string or as a relation
   projectTitle   String
   projectDescription String
-  url            String?  // Optional project URL
-
+  url            String?  
+  skills         String[]
   createdAt      DateTime @default(now())
-  status         String   @default("pending") // e.g., pending, active, completed
+  status         String   @default("pending") 
   amount         Float
 
   // Optional relationship to a User model if needed
