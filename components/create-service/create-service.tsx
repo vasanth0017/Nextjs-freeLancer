@@ -142,18 +142,18 @@ export default function ServiceForm({ userId }: { userId: string }) {
     return (
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-6  mt-10">
         <div className="flex items-center justify-center sm:h-[65vh] md:h-[80vh] col-span-full">
-          <Loader className="animate-spin w-10 h-10 text-gray-600" />
+          <Loader className="animate-spin w-10 h-10 " />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-7xl mx-auto bg-white shadow-2xl rounded-xl overflow-hidden">
+    <div className="min-h-screen  p-8">
+      <div className="max-w-7xl mx-auto bg-secondary shadow-2xl rounded-lg overflow-hidden">
         <div className="p-8">
           <div className="flex justify-between">
-            <h1 className="text-3xl font-bold text-gray-800 mb-6">
+            <h1 className="text-3xl font-bold mb-6">
               {serviceId ? "Edit Service Details" : "Create Your Service"}
             </h1>
             <Button variant="secondary" onClick={handleredirect}>
@@ -169,49 +169,49 @@ export default function ServiceForm({ userId }: { userId: string }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Personal Information Section */}
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-gray-700 border-b pb-2">
+              <h2 className="text-xl font-semibold  border-b pb-2">
                 Personal Information
               </h2>
               <div className="space-y-4">
                 <div>
-                  <Label className="text-gray-600 mb-2">First Name</Label>
+                  <Label className=" mb-2">First Name</Label>
                   <Input
                     name="name"
                     placeholder="Enter name"
                     value={serviceData.name || ""}
                     onChange={handleChange}
-                    className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    className="w-full rounded-lg border transition-all"
                   />
                 </div>
                 <div>
-                  <Label className="text-gray-600 mb-2">Email</Label>
+                  <Label className=" mb-2">Email</Label>
                   <Input
                     name="email"
                     placeholder="Enter email address"
                     value={serviceData.email || ""}
                     onChange={handleChange}
-                    className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    className="w-full rounded-lg border transition-all"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label className="text-gray-600 mb-2">Phone Number</Label>
+                    <Label className=" mb-2">Phone Number</Label>
                     <Input
                       name="phoneNumber"
                       placeholder="Enter phone number"
                       value={serviceData.phoneNumber || ""}
                       onChange={handleChange}
-                      className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                      className="w-full rounded-lg border transition-all"
                     />
                   </div>
                   <div>
-                    <Label className="text-gray-600 mb-2">Enter Your Age</Label>
+                    <Label className=" mb-2">Enter Your Age</Label>
                     <Input
                       name="age"
                       placeholder="Enter your Age"
                       value={serviceData.age || ""}
                       onChange={handleChange}
-                      className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                      className="w-full rounded-lg border transition-all"
                     />
                   </div>
                 </div>
@@ -220,50 +220,50 @@ export default function ServiceForm({ userId }: { userId: string }) {
 
             {/* Address & Professional Details Section */}
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-gray-700 border-b pb-2">
+              <h2 className="text-xl font-semibold border-b pb-2">
                 Professional Details
               </h2>
               <div className="space-y-4">
                 <div>
-                  <Label className="text-gray-600 mb-2">Address</Label>
+                  <Label className=" mb-2">Address</Label>
                   <Input
                     name="address"
                     placeholder="Enter full address"
                     value={serviceData.address || ""}
                     onChange={handleChange}
-                    className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    className="w-full rounded-lg border transition-all"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label className="text-gray-600 mb-2">State</Label>
+                    <Label className=" mb-2">State</Label>
                     <Input
                       name="state"
                       placeholder="Enter state"
                       value={serviceData.state || ""}
                       onChange={handleChange}
-                      className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                      className="w-full rounded-lg border transition-all"
                     />
                   </div>
                   <div>
-                    <Label className="text-gray-600 mb-2">Country</Label>
+                    <Label className=" mb-2">Country</Label>
                     <Input
                       name="country"
                       placeholder="Enter country"
                       value={serviceData.country || ""}
                       onChange={handleChange}
-                      className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                      className="w-full rounded-lg border transition-all"
                     />
                   </div>
                 </div>
                 <div>
-                  <Label className="text-gray-600 mb-2">LinkedIn Profile</Label>
+                  <Label className=" mb-2">LinkedIn Profile</Label>
                   <Input
                     name="linkedin"
                     placeholder="Enter LinkedIn URL"
                     value={serviceData.linkedin || ""}
                     onChange={handleChange}
-                    className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    className="w-full rounded-lg border transition-all"
                   />
                 </div>
               </div>
@@ -271,32 +271,32 @@ export default function ServiceForm({ userId }: { userId: string }) {
 
             {/* Project Details Section */}
             <div className="space-y-6 md:col-span-2">
-              <h2 className="text-xl font-semibold text-gray-700 border-b pb-2">
+              <h2 className="text-xl font-semibold border-b pb-2">
                 Project Information
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <Label className="text-gray-600 mb-2">Project Title</Label>
+                  <Label className=" mb-2">Project Title</Label>
                   <Input
                     name="projectTitle"
                     placeholder="Enter project title"
                     value={serviceData.projectTitle || ""}
                     onChange={handleChange}
-                    className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    className="w-full rounded-lg border transition-all"
                   />
                 </div>
                 <div>
-                  <Label className="text-gray-600 mb-2">Project URL</Label>
+                  <Label className=" mb-2">Project URL</Label>
                   <Input
                     name="url"
                     placeholder="Enter project URL"
                     value={serviceData.url || ""}
                     onChange={handleChange}
-                    className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    className="w-full rounded-lg border transition-all"
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <Label className="text-gray-600 mb-2">
+                  <Label className=" mb-2">
                     Project Description
                   </Label>
                   <Input
@@ -304,7 +304,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
                     placeholder="Describe your project"
                     value={serviceData.projectDescription || ""}
                     onChange={handleChange}
-                    className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                    className="w-full rounded-lg border transition-all"
                   />
                 </div>
               </div>
@@ -313,33 +313,33 @@ export default function ServiceForm({ userId }: { userId: string }) {
             {/* Additional Details */}
             <div className="grid grid-cols-3 gap-6 md:col-span-2">
               <div>
-                <Label className="text-gray-600 mb-2">Categories</Label>
+                <Label className=" mb-2">Categories</Label>
                 <Input
                   name="categories"
                   placeholder="Enter categories"
                   value={serviceData.categories || ""}
                   onChange={handleChange}
-                  className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                  className="w-full rounded-lg border transition-all"
                 />
               </div>
               <div>
-                <Label className="text-gray-600 mb-2">Status</Label>
+                <Label className=" mb-2">Status</Label>
                 <Input
                   name="status"
                   placeholder="Enter project status"
                   value={serviceData.status || ""}
                   onChange={handleChange}
-                  className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                  className="w-full rounded-lg border transition-all"
                 />
               </div>
               <div>
-                <Label className="text-gray-600 mb-2">Amount</Label>
+                <Label className=" mb-2">Amount</Label>
                 <Input
                   name="amount"
                   placeholder="Enter amount"
                   value={serviceData.amount || ""}
                   onChange={handleChange}
-                  className="w-full rounded-xl border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all"
+                  className="w-full rounded-lg border transition-all"
                 />
               </div>
             </div>
@@ -390,7 +390,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
                     </Dialog>
                     <Button
                       onClick={handleSave}
-                      className="bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl transition-all"
+                      className="bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-all"
                     >
                       {loading ? (
                         <Loader className="animate-spin w-5 h-5" />
@@ -403,7 +403,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
               ) : (
                 <Button
                   onClick={handleCreate}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl transition-all"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-all"
                 >
                   {loading ? (
                     <Loader className="animate-spin w-5 h-5" />

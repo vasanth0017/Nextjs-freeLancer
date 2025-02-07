@@ -74,12 +74,12 @@ export default function UserDetail({ email }: { email: string }) {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Account Details</h1>
+    <div className="max-w-3xl mx-auto p-6 bg-secondary shadow-md rounded-lg">
+      <h1 className="text-2xl font-bold  mb-6">Account Details</h1>
       {users.map((user: any, index: any) => (
         <div key={user.id} className="border-b pb-4 mb-4">
           <div className="flex items-center space-x-4">
-            <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center text-gray-500">
+            <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center text-gray-700">
               {user.name?.charAt(0).toUpperCase()}
             </div>
             <div className="flex-1">
@@ -105,12 +105,12 @@ export default function UserDetail({ email }: { email: string }) {
               ) : (
                 <>
                   <h2 className="text-lg font-semibold">{user.name}</h2>
-                  <p className="text-gray-600">{user.email}</p>
+                  <p className="text-gray-700">{user.email}</p>
                 </>
               )}
             </div>
             {editIndex === index ? (
-              <Button
+              <Button 
                 onClick={() => handleSave(index)}
                 className="px-4 py-2 rounded"
               >

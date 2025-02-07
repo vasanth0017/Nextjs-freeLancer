@@ -113,7 +113,7 @@ export default function AlluserService() {
                 return (
                   <Card
                     key={index}
-                    className="relative group hover:shadow-xl transition-all duration-300 border-0 bg-white/50 backdrop-blur-lg p-6 rounded-xl shadow-lg"
+                    className="relative group hover:shadow-xl transition-all duration-300 border-0 bg-secondary backdrop-blur-lg p-6 rounded-xl shadow-lg"
                   >
                     {/* Email Initials */}
 
@@ -126,7 +126,7 @@ export default function AlluserService() {
                     {/* Card Header */}
                     <CardHeader className="pb-4 mt-6">
                       <div className="flex flex-col gap-2">
-                        <CardTitle className="text-xl font-bold text-gray-800 truncate">
+                        <CardTitle className="text-xl font-bold truncate">
                           {service.projectTitle}
                         </CardTitle>
                         <span

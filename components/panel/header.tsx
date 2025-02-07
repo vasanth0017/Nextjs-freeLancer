@@ -10,7 +10,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ children }) => {
   return (
-    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 rounded-xl m-3 shadow-md border">
+    <header className="sticky top-0 z-50 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 rounded-xl m-3 bg-background shadow dark:shadow-secondary border">
       <div className="flex justify-between w-full mr-4">
         <div className="flex items-center gap-2 px-4">
           <SidebarTrigger className="-ml-1" />

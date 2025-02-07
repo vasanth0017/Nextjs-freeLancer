@@ -21,7 +21,7 @@ export  function sidebarData  (session: any) {
     },
     teams: [
       {
-        title:"Document",
+        title:"Karthick Raja",
         subName:"v1.0.0"
       },
     ],
