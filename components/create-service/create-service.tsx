@@ -38,7 +38,6 @@ export default function ServiceForm({ userId }: { userId: string }) {
   );
   const [skills, setSkills] = useState<string[]>([]);
   const [input, setInput] = useState("");
-  console.log(skills);
 
   //add skills
   const addSkill = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -171,8 +170,8 @@ export default function ServiceForm({ userId }: { userId: string }) {
   }
 
   return (
-    <div className="min-h-screen  p-8">
-      <div className="max-w-7xl mx-auto bg-secondary shadow-2xl rounded-lg overflow-hidden">
+    <div className="min-h-screen  lg:p-8">
+      <div className="max-w-7xl mx-auto shadow-2xl rounded-lg overflow-hidden">
         <div className="p-8">
           <div className="flex justify-between">
             <h1 className="text-3xl font-bold mb-6">
@@ -363,22 +362,23 @@ export default function ServiceForm({ userId }: { userId: string }) {
                 />
               </div>
             </div>
-            <div className="grid grid-col-1 border rounded-lg p-6 w-full  space-y-4 shadow-sm">
-              <div className="flex flex-wrap gap-3 ">
+            <div className="grid grid-col-1  rounded-lg p-6 w-full  space-y-4 shadow-sm">
+              <div className="flex flex-wrap  gap-3 ">
                 {skills.map((skill, index) => (
                   <span
                     key={index}
-                    className="bg-background px-4 py-2 rounded-full flex items-center gap-2  transition-colors"
+                    className="bg-background px-4 py-1  border rounded-full flex items-center gap-2 transition-colors"
                   >
                     {skill}
-                    <button
+                    <Button
+                      variant="ghost"
                       type="button"
                       onClick={() => removeSkill(index)}
-                      className="hover:bg-gray-300 rounded-full p-1 transition-colors"
+                      className="rounded-full p-1 transition-colors"
                       aria-label={`Remove ${skill}`}
                     >
                       <X className="h-4 w-4 text-gray-600" />
-                    </button>
+                    </Button>
                   </span>
                 ))}
               </div>

@@ -86,7 +86,7 @@ export default function MyServices({
   return (
     <>
       {isLoading ? (
-        <div className="flex items-center justify-center min-h-[400px]">
+        <div className="flex items-center justify-center min-h-full">
           <Loader className="animate-spin w-8 h-8 text-blue-600" />
         </div>
       ) : (
@@ -118,7 +118,7 @@ export default function MyServices({
           </div>
           {users.flatMap((user) => user.services).length === 0 ? (
             <div className="flex items-center justify-center min-h-[400px]">
-              <h2 className="text-gray-600 text-lg">
+              <h2 className="text-gray-600 text-center text-lg">
                 No services found. Click &apos;Add Service&apos; to create one.
               </h2>
             </div>
