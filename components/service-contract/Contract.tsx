@@ -3,6 +3,7 @@ import {
   createContract,
   getAccountDetails,
   getServiceDetails,
+  upadteContract,
 } from "@/services/apicall";
 import { Card, CardHeader, CardTitle, CardContent } from "@camped-ui/card";
 import {
@@ -45,9 +46,9 @@ export default function ServiceContract({
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState("contract");
- 
-  //assign userId to id for send contract clientId 
-  const id = userId
+
+  //assign userId to id for send contract clientId
+  const id = userId;
   //handle contract edit
   const handleChange = (index: number, field: string, value: string) => {
     setServiceData((prev: any) => {
@@ -99,18 +100,55 @@ export default function ServiceContract({
     };
     if (email) fetchData();
   }, [email]);
-  
-  const isData = serviceData?.contracts
+
+  let isData = null;
+
+  if (serviceData && serviceData.contracts && serviceData.contracts[0]) {
+    isData = serviceData.contracts[0].userId || null;
+  }
 
   const clientAmount =
     serviceData?.contracts?.[0]?.amount || serviceData.amount;
   const clientproposals = serviceData?.contracts?.[0]?.proposals || null;
   const clientagreement = serviceData?.contracts?.[0]?.agreement || null;
 
+  //handle update contract changes
+  const handleUpadate = async () => {
+    const contractId = serviceData?.contracts?.[0]?.id || null;
+    const userId = serviceData?.userId;
+    const freelancerId = serviceId;
+    const clientId = id;
+    const title = serviceData?.projectTitle;
+    const description = serviceData?.projectDescription;
+    const amount = parseFloat(clientAmount);
+    const currency = "INR";
+    const status = serviceData?.status;
+    const proposals = clientproposals;
+    const agreement = clientagreement;
+
+    try {
+      await upadteContract({
+        contractId,
+        userId,
+        freelancerId,
+        clientId,
+        title,
+        description,
+        amount,
+        currency,
+        status,
+        proposals,
+        agreement,
+      });
+      toast.success("Successfully Updated");
+    } catch (error) {
+      toast.error("Error during update the contract details");
+    }
+  };
   //save contract details
   const handlesave = async () => {
-    if(!clientAmount){
-      toast.error("Please Give your Amount for this service")
+    if (!clientAmount) {
+      toast.error("Please Give your Amount for this service");
     }
     const userId = serviceData?.userId;
     const freelancerId = serviceId;
@@ -122,7 +160,7 @@ export default function ServiceContract({
     const status = serviceData?.status;
     const proposals = clientproposals;
     const agreement = clientagreement;
-   
+
     try {
       await createContract({
         userId,
@@ -155,7 +193,7 @@ export default function ServiceContract({
         value={activeTab}
         onValueChange={(value) => setActiveTab(value)}
       >
-        <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4">
+        <TabsList className="grid w-full gap-2  grid-cols-2 lg:grid-cols-4">
           <TabsTrigger value="details">Project Details</TabsTrigger>
           <TabsTrigger value="freelancer">
             {" "}
@@ -168,7 +206,7 @@ export default function ServiceContract({
           <TabsTrigger value="contract">Contract</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="details" className="mt-6">
+        <TabsContent value="details" className="mt-12">
           <Card>
             <CardHeader>
               <CardTitle className="text-2xl font-bold">
@@ -204,7 +242,7 @@ export default function ServiceContract({
           </Card>
         </TabsContent>
 
-        <TabsContent value="freelancer" className="mt-6">
+        <TabsContent value="freelancer" className="mt-12">
           <Card>
             <CardHeader>
               <CardTitle className="text-2xl font-bold">
@@ -261,7 +299,7 @@ export default function ServiceContract({
           </Card>
         </TabsContent>
 
-        <TabsContent value="client" className="mt-6">
+        <TabsContent value="client" className="mt-12">
           <Card>
             <CardHeader>
               <CardTitle className="text-2xl font-bold">
@@ -310,22 +348,24 @@ export default function ServiceContract({
             </CardContent>
           </Card>
         </TabsContent>
-        <TabsContent value="contract" className="mt-6">
+        <TabsContent value="contract" className="mt-12">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="text-2xl font-bold">
                 Contract Details
               </CardTitle>
-              {serviceData?.contracts && (
+              {isData ? (
                 <Button
                   variant="outline"
-                  onClick={() => setEditIndex(editIndex !== null ? null : 0)}
+                  onClick={handleUpadate}
                   className="flex items-center gap-2"
                 >
                   <Edit2 className="w-4 h-4" />
-                  {editIndex !== null ? "Save Changes" : "Edit Contract"}
+                  Save Changes
                 </Button>
-              ) }
+              ) : (
+                ""
+              )}
             </CardHeader>
             <CardContent>
               {serviceData?.contracts && serviceData.contracts.length > 0 ? (
@@ -383,7 +423,9 @@ export default function ServiceContract({
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <h3 className="font-semibold mb-2">Freelancer Amount</h3>
-                      <p className="text-2xl font-bold text-green-600">${serviceData?.amount}</p>
+                      <p className="text-2xl font-bold text-green-600">
+                        ${serviceData?.amount}
+                      </p>
                     </div>
                     <div>
                       <h3 className="font-semibold mb-2">Client Amount</h3>
@@ -392,7 +434,7 @@ export default function ServiceContract({
                         onChange={(e) =>
                           handleChange(0, "amount", e.target.value)
                         }
-                        placeholder="Enter client amount"
+                        placeholder="Your Quote for this service"
                       />
                     </div>
                   </div>
@@ -427,15 +469,15 @@ export default function ServiceContract({
         </TabsContent>
       </Tabs>
       <div className="flex w-full justify-between">
-      <Button variant="secondary" onClick={handleredirect}>
-              <ArrowLeft className="h-4 w-4 mr-1 " />
-              {redirectLoad ? (
-                <Loader className="animate-spin w-5 h-5" />
-              ) : (
-                "Back"
-              )}
-            </Button>
-        {activeTab === "contract" && <Button onClick={handlesave}>Save</Button>}
+        <Button variant="secondary" onClick={handleredirect}>
+          <ArrowLeft className="h-4 w-4 mr-1 " />
+          {redirectLoad ? <Loader className="animate-spin w-5 h-5" /> : "Back"}
+        </Button>
+        {activeTab === "contract" && !isData ? (
+          <Button onClick={handlesave}>Save</Button>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

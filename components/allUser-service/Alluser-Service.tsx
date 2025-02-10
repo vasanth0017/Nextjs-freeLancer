@@ -43,7 +43,7 @@ export default function AlluserService({ session }: AlluserServiceProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const router = useRouter();
-  
+
   //handle router
   const handleRedirect = () => {
     setRedirectLoad(true);
@@ -87,7 +87,7 @@ export default function AlluserService({ session }: AlluserServiceProps) {
       )
     );
   });
- 
+
   return (
     <>
       {isLoading ? (
@@ -194,35 +194,43 @@ export default function AlluserService({ session }: AlluserServiceProps) {
                         >
                           View Details
                         </Button>
-                        {session?.user?.role === "client" &&
-                        !service?.contracts?.length ? (
-                          <Button
-                            variant="ghost"
-                            className="w-full transition-all duration-300"
-                          >
-                            <Link
-                              href={`/service-contract?serviceId=${service?.id}`}
-                              className="flex items-center"
+                        <div className="items-center justify-center">
+                          {session?.user?.role === "client" &&
+                          !service?.contracts?.length ? (
+                            <Button
+                              variant="ghost"
+                              className="w-full transition-all duration-300"
                             >
-                              Create Contract
-                            </Link>
-                          </Button>
-                        ) : ""}
-                        { service?.contracts?.length ?(
-                          <div className="flex justify-between items-center mt-3">
-                            <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
-                              <span className="text-2xl font-bold text-blue-600">
-                                {service?.name?.charAt(0).toUpperCase()}
-                              </span>
-                            </div>
+                              <Link
+                                href={`/service-contract?serviceId=${service?.id}`}
+                                className="flex items-center"
+                              >
+                                Create Contract
+                              </Link>
+                            </Button>
+                          ) : (
+                            ""
+                          )}
+                          {service?.contracts?.length ? (
+                            <div className="flex justify-between items-center mt-3">
+                              <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
+                                <span className="text-2xl font-bold text-blue-600">
+                                  {service?.name?.charAt(0).toUpperCase()}
+                                </span>
+                              </div>
                               {service?.status}
-                            <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
-                              <span className="text-2xl font-bold text-blue-600">
-                                {session?.user?.email?.charAt(0).toUpperCase()}
-                              </span>
+                              <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
+                                <span className="text-2xl font-bold text-blue-600">
+                                  {session?.user?.email
+                                    ?.charAt(0)
+                                    .toUpperCase()}
+                                </span>
+                              </div>
                             </div>
-                          </div>
-                        ):""}
+                          ) : (
+                            ""
+                          )}
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
