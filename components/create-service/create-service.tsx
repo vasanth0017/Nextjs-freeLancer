@@ -38,7 +38,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
   );
   const [skills, setSkills] = useState<string[]>([]);
   const [input, setInput] = useState("");
-
+ 
   //add skills
   const addSkill = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && input.trim() !== "") {
@@ -81,7 +81,7 @@ export default function ServiceForm({ userId }: { userId: string }) {
     const { name, value } = e.target;
     setServiceData((prev: any) => ({ ...prev, [name]: value }));
   };
-  //handle changes
+  //handle update changes
   const handleSave = async () => {
     try {
       setLoading(true);

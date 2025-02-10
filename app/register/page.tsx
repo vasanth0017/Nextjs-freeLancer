@@ -48,8 +48,8 @@ export default function Register() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="w-full max-w-md space-y-6 bg-white p-6 shadow rounded-lg">
+    <div className="flex min-h-screen items-center bg-secondary  justify-center">
+      <div className="w-full max-w-md space-y-6 p-6 shadow bg-background rounded-lg">
         <h2 className="text-center text-2xl font-semibold">Create Account</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Image Upload
@@ -83,7 +83,8 @@ export default function Register() {
             <Label htmlFor="role">Role</Label>
             <select id="role" value={role} onChange={(e) => setRole(e.target.value)} className="w-full border rounded-lg p-2">
               <option value="user">User</option>
-              <option value="freelancer">freelancer</option>
+              <option value="freelancer">Freelancer</option>
+              <option value="client">Client</option>
             </select>
           </div>
 

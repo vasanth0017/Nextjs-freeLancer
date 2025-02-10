@@ -49,6 +49,7 @@ model User {
   accounts             Account[]
   sessions             Session[]
   services             FreelancerService[] @relation("freelauncerService")
+  contracts            Contract[] @relation("Contract")
 }
  
 model VerificationToken {
@@ -83,4 +84,41 @@ model FreelancerService {
   // Optional relationship to a User model if needed
   userId         String?
   user           User? @relation("freelauncerService", fields: [userId], references: [id], onDelete: Cascade)
+  contracts      Contract[] @relation("FreelancerContracts")
+}
+
+model Contract {
+  id             String   @id @default(uuid()) @map("_id")
+  userId         String?  
+  freelancerId   String   
+  clientId       String   
+
+  title          String   
+  description    String   
+  amount         Float    
+  currency       String   @default("USD") 
+  status         String   @default("pending") 
+
+  proposals      Json?    
+  agreement      Json?    
+
+  milestones     Milestone[] 
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  freelancer     FreelancerService @relation("FreelancerContracts", fields: [freelancerId], references: [id], onDelete: Cascade)
+  user           User @relation("Contract", fields: [clientId], references: [id], onDelete: Cascade)
+}
+
+
+model Milestone {
+  id            String   @id @default(uuid()) @map("_id") 
+  contractId    String   
+  description   String   
+  dueDate       DateTime 
+  amount        Float    
+  status        String   @default("pending") 
+
+  contract      Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
 }

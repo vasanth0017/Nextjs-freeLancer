@@ -68,8 +68,8 @@ export const addServiceList = async (
 }
 
 //get Service details
-export const getServiceDetails = async ( userId:any) => {
-  return await Fetch.getJSON(`/freelauncer-services/get-service?userId=${userId}`)
+export const getServiceDetails = async ( serviceId:any) => {
+  return await Fetch.getJSON(`/freelauncer-services/get-service?userId=${serviceId}`)
 }
 
 //update Service details
@@ -121,4 +121,36 @@ export const getAllUserService = async ( ) => {
 //delete service
 export const deleteService = async ( serviceId:any) => {
   return await Fetch.deleteJSON('/freelauncer-services/delete-service', {serviceId})
+}
+
+//create contract
+export const createContract = async ({ 
+  userId,
+  freelancerId ,
+  clientId,
+  title,
+  description,
+  amount,
+  currency,
+  status,
+  proposals,
+  agreement,
+}:any) => {
+  return await Fetch.postJSON('/manage-contract/contract', { 
+    userId,
+    freelancerId ,
+    clientId,
+    title,
+    description,
+    amount,
+    currency,
+    status,
+    proposals,
+    agreement,
+  })
+}
+
+//get-contract details
+export const getContractDetails = async ( userId:any) => {
+  return await Fetch.getJSON(`/manage-contract/get-contract?userId=${userId}`)
 }

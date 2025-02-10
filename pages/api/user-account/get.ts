@@ -7,7 +7,8 @@ const handler = async (req: any, res: any) => {
     const user = await db.user.findMany({
       where: {email:email},
       include:{
-        services : true
+        services : true,
+        contracts:true
       }
     });
     res.status(201).json(user);

@@ -72,7 +72,7 @@ export  function sidebarData  (session: any) {
         ...(session?.user?.role === "freelancer" && {
           items: [
             {
-              title: "Your Service",
+              title: "My Services",
               url: "/my-services",
             },
           ],

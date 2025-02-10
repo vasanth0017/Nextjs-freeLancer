@@ -6,7 +6,6 @@ import {
   ArrowLeft,
   EllipsisVertical,
   ExternalLink,
-  Link,
   Loader,
   Search,
 } from "lucide-react";
@@ -15,8 +14,27 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import FreelancerModal from "../freelauncer-portfolio/potfolio";
+import Link from "next/link";
 
-export default function AlluserService() {
+// Define session types
+type User = {
+  role?: "client" | "freelauncer" | "user";
+  email?: string;
+};
+
+type Session = {
+  user?: User;
+} | null;
+
+interface AlluserServiceProps {
+  session: Session;
+}
+interface ServiceData {
+  id: string;
+  contracts?: any[];
+}
+
+export default function AlluserService({ session }: AlluserServiceProps) {
   const [users, setUsers] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -25,12 +43,13 @@ export default function AlluserService() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const router = useRouter();
+  
   //handle router
   const handleRedirect = () => {
     setRedirectLoad(true);
     router.push("/dashboard");
   };
- 
+
   //handle portfoli
   const handlePortfolioClick = (service: any) => {
     setSelectedService(service);
@@ -53,6 +72,7 @@ export default function AlluserService() {
     };
     fetchData();
   }, []);
+
   // Filter users based on either amount or location
   const filteredUsers = users.filter((service) => {
     const query = searchQuery.toLowerCase();
@@ -62,10 +82,12 @@ export default function AlluserService() {
       service.address?.toLowerCase().includes(query) ||
       service.country?.toLowerCase().includes(query) ||
       service.projectTitle?.toLowerCase().includes(query) ||
-      service.skills?.some((skill:any) => skill.toLowerCase().trim().includes(query.trim()))
+      service.skills?.some((skill: any) =>
+        skill.toLowerCase().trim().includes(query.trim())
+      )
     );
   });
-
+ 
   return (
     <>
       {isLoading ? (
@@ -172,6 +194,34 @@ export default function AlluserService() {
                         >
                           View Details
                         </Button>
+                        {session?.user?.role === "client" &&
+                        !service?.contracts?.length ? (
+                          <Button
+                            variant="ghost"
+                            className="w-full transition-all duration-300"
+                          >
+                            <Link
+                              href={`/service-contract?serviceId=${service?.id}`}
+                              className="flex items-center"
+                            >
+                              Create Contract
+                            </Link>
+                          </Button>
+                        ) : (
+                          <div className="flex justify-between items-center mt-3">
+                            <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
+                              <span className="text-2xl font-bold text-blue-600">
+                                {service?.name?.charAt(0).toUpperCase()}
+                              </span>
+                            </div>
+                              {service?.status}
+                            <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
+                              <span className="text-2xl font-bold text-blue-600">
+                                {session?.user?.email?.charAt(0).toUpperCase()}
+                              </span>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </CardContent>
                   </Card>

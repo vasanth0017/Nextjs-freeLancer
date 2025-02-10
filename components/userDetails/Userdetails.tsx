@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Loader } from "lucide-react";
 import toast from "react-hot-toast";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 export default function UserDetail({ email }: { email: string }) {
   const [users, setUsers] = useState<any>([]);
@@ -28,7 +30,7 @@ export default function UserDetail({ email }: { email: string }) {
     };
     if (email) fetchData();
   }, [email]);
-
+  
   const handleSave = async (index: number) => {
     const user = users[index];
     if (!user?.id) return;
@@ -85,7 +87,7 @@ export default function UserDetail({ email }: { email: string }) {
             <div className="flex-1">
               {editIndex === index ? (
                 <>
-                  <input
+                  <Input
                     type="text"
                     value={user.name}
                     onChange={(e) =>
@@ -93,7 +95,7 @@ export default function UserDetail({ email }: { email: string }) {
                     }
                     className="border p-2 w-full rounded"
                   />
-                  <input
+                  <Input
                     type="text"
                     value={user.email}
                     onChange={(e) =>
@@ -132,19 +134,19 @@ export default function UserDetail({ email }: { email: string }) {
 
           {editIndex === index ? (
             <>
-              <label className="block mt-4">
+              <Label className="block mt-4">
                 <strong>Phone:</strong>
-                <input
+                <Input
                   type="text"
                   value={user.phoneNumber}
                   onChange={(e) => handleChange(index, "phoneNumber", e.target.value)}
                   className="border p-2 w-full rounded"
                 />
-              </label>
+              </Label>
 
-              <label className="block mt-2">
+              <Label className="block mt-2">
                 <strong>Address:</strong>
-                <input
+                <Input
                   type="text"
                   value={user.address}
                   onChange={(e) =>
@@ -152,7 +154,7 @@ export default function UserDetail({ email }: { email: string }) {
                   }
                   className="border p-2 w-full rounded"
                 />
-              </label>
+              </Label>
             </>
           ) : (
             <>

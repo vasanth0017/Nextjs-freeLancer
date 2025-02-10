@@ -8,4 +8,4 @@ export default async function UserDetails(){
     return(
         <UserDetail email={email}/>
     )
-} 
+}
