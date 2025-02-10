@@ -207,7 +207,8 @@ export default function AlluserService({ session }: AlluserServiceProps) {
                               Create Contract
                             </Link>
                           </Button>
-                        ) : (
+                        ) : ""}
+                        { service?.contracts?.length ?(
                           <div className="flex justify-between items-center mt-3">
                             <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
                               <span className="text-2xl font-bold text-blue-600">
@@ -221,7 +222,7 @@ export default function AlluserService({ session }: AlluserServiceProps) {
                               </span>
                             </div>
                           </div>
-                        )}
+                        ):""}
                       </div>
                     </CardContent>
                   </Card>
