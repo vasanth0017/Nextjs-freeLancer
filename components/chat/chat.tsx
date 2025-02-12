@@ -50,7 +50,7 @@ export default function Chat({
       await fetch("/api/socket"); // Calls the API route to start the server
       console.log("Socket.IO server initialized.");
 
-      socket = io({
+      socket = io(process.env.NEXT_PUBLIC_URL,{
         path: "/socket.io",
         transports: ["websocket", "polling"],
       });
