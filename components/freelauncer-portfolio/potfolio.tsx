@@ -108,14 +108,7 @@ export default function FreelancerModal({ data, isOpen, onClose }: ModalProps) {
             {/* skills */}
             <h2 className="text-2xl font-semibold text-white">Skills</h2>
             <div className="flex flex-row gap-3 mt-2">
-              {data?.skills?.map((skill: string, index: number) => (
-                <Card
-                  key={index}
-                  className="bg-background px-4 py-2 rounded-full w-fit items-center gap-2 transition-colors"
-                >
-                  {skill}
-                </Card>
-              ))}
+            skills
             </div>
             {/* Project Details */}
             <div className="space-y-4 mt-3">

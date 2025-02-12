@@ -226,5 +226,10 @@ export const storeChatDetails = async ({
 
 //get-contract-message details
 export const getMessage = async (contractId: any) => {
-  return await Fetch.getJSON(`/manage-contract/get-contract?contractId=${contractId}`);
+  return await Fetch.getJSON(`/contract-chat/get-chat?contractId=${contractId}`);
+};
+
+//delete msg
+export const deleteMsg = async (id: any) => {
+  return await Fetch.deleteJSON('/contract-chat/delete-msg', {id});
 };
