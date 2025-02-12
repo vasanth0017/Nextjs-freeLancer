@@ -206,3 +206,25 @@ export const upadteContract = async ({
     agreement,
   });
 };
+
+//store chat message and details
+export const storeChatDetails = async ({
+  contractId,
+  senderId,
+  receiverId,
+  content,
+  freelancerId,
+}: any) => {
+  return await Fetch.postJSON("/contract-chat/chat", {
+    contractId,
+    senderId,
+    receiverId,
+    content,
+    freelancerId,
+  });
+};
+
+//get-contract-message details
+export const getMessage = async (contractId: any) => {
+  return await Fetch.getJSON(`/manage-contract/get-contract?contractId=${contractId}`);
+};

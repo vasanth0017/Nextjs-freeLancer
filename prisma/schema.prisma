@@ -85,6 +85,7 @@ model FreelancerService {
   userId         String?
   user           User? @relation("freelauncerService", fields: [userId], references: [id], onDelete: Cascade)
   contracts      Contract[] @relation("FreelancerContracts")
+  chat           Message[] @relation("contractChat")
 }
 
 model Contract {
@@ -121,4 +122,16 @@ model Milestone {
   status        String   @default("pending") 
 
   contract      Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+}
+
+model Message {
+  id             String   @id @default(uuid()) @map("_id")
+  contractId     String  
+  senderId       String   
+  receiverId     String   
+  content        String   
+  createdAt      DateTime @default(now())
+  freelancerId   String   
+
+  freelancer     FreelancerService @relation("contractChat", fields: [freelancerId], references: [id], onDelete: Cascade)
 }

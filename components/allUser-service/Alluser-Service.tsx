@@ -192,7 +192,12 @@ export default function AlluserService({ session }: AlluserServiceProps) {
                           variant="outline"
                           className="w-full group-hover:bg-blue-600 group-hover:text-white transition-all duration-300"
                         >
-                          View Details
+                          <Link
+                            href={`/service-details?serviceId=${service?.id}`}
+                            className="flex items-center"
+                          >
+                            View Details
+                          </Link>
                         </Button>
                         <div className="items-center justify-center">
                           {session?.user?.role === "client" &&

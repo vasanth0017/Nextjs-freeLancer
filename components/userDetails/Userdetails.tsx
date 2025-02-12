@@ -11,7 +11,7 @@ import { Label } from "../ui/label";
 export default function UserDetail({ email }: { email: string }) {
   const [users, setUsers] = useState<any>([]);
   const [loading, setLoading] = useState(false);
-  const[isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function UserDetail({ email }: { email: string }) {
     };
     if (email) fetchData();
   }, [email]);
-  
+
   const handleSave = async (index: number) => {
     const user = users[index];
     if (!user?.id) return;
@@ -48,7 +48,7 @@ export default function UserDetail({ email }: { email: string }) {
         phoneNumber,
         address,
       });
-      toast.success("Changes Saved")
+      toast.success("Changes Saved");
       const updatedUsers = [...users];
       updatedUsers[index] = updatedUser;
       setUsers(updatedUsers);
@@ -72,7 +72,7 @@ export default function UserDetail({ email }: { email: string }) {
           <Loader className="animate-spin w-10 h-10 text-gray-600" />
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -112,15 +112,11 @@ export default function UserDetail({ email }: { email: string }) {
               )}
             </div>
             {editIndex === index ? (
-              <Button 
+              <Button
                 onClick={() => handleSave(index)}
                 className="px-4 py-2 rounded"
               >
-                {loading ? (
-                  <Loader className="animate-spin w-5 h-5" />
-                ) : (
-                  "Save"
-                )}
+                {loading ? <Loader className="animate-spin w-5 h-5" /> : "Save"}
               </Button>
             ) : (
               <Button
@@ -139,7 +135,9 @@ export default function UserDetail({ email }: { email: string }) {
                 <Input
                   type="text"
                   value={user.phoneNumber}
-                  onChange={(e) => handleChange(index, "phoneNumber", e.target.value)}
+                  onChange={(e) =>
+                    handleChange(index, "phoneNumber", e.target.value)
+                  }
                   className="border p-2 w-full rounded"
                 />
               </Label>
