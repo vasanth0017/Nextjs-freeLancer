@@ -90,7 +90,7 @@ export default function Chat({
       content,
       freelancerId,
     });
-    if (socket) {
+    if (socket?.connected) {
       socket.emit("sendMessage", response);
       setMessages((prev) => [...prev, response]);
       setNewMessage("");
