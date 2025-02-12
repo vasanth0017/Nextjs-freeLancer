@@ -16,9 +16,13 @@ export default function SocketHandler(req: any, res: any) {
 
   io.on("connection", (socket) => {
     console.log(` Client connected: ${socket.id}`);
-
+     // Log all incoming events
+  // socket.onAny((event, data) => {
+  //   console.log(`Event received: ${event}`);
+  //   console.log(`Data: ${JSON.stringify(data, null, 2)}`);
+  // });
     socket.on("sendMessage", (message) => {
-    //  console.log("📩 Message received:", JSON.stringify(message, null, 2));
+     console.log("Message received:", JSON.stringify(message, null, 2));
 
       io.emit("receiveMessage", message);
     });

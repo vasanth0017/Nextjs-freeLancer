@@ -90,6 +90,12 @@ export default function Chat({
       content,
       freelancerId,
     });
+   
+    if (!socket || !socket.connected) {
+      console.error("WebSocket is not connected! Check the connection.");
+    } else {
+      console.log(" WebSocket connected:", socket.id);
+    }
     if (socket?.connected) {
       socket.emit("sendMessage", response);
       setMessages((prev) => [...prev, response]);
