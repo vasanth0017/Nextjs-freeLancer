@@ -18,7 +18,7 @@ import Link from "next/link";
 
 // Define session types
 type User = {
-  role?: "client" | "freelauncer" | "user";
+  role?: "client" | "freelancer" | "user";
   email?: string;
 };
 

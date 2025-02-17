@@ -11,17 +11,30 @@ import { Mail, Phone, MapPin, Calendar, Briefcase, User } from "lucide-react";
 export default function Details({
   userId,
   senderName,
+  role,
 }: {
   userId: any;
-  senderName: string
+  senderName: string;
+  role?: "client" | "freelancer" | "user";
 }) {
   const searchParams = useSearchParams();
   const serviceId = searchParams?.get("serviceId") || "";
   const [serviceData, setServiceData] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
   const [chat, setChat] = useState(false);
- 
-  //fetch free-launcer service details
+
+  //this for restrict chat for others
+  const freelauncer_Id =
+    serviceData?.contracts?.[0]?.freelancerId === serviceData?.id;
+  const client_id = serviceData?.contracts?.[0]?.clientId;
+  const user_id = serviceData?.contracts?.[0]?.userId;
+  const chatId = role === "client" 
+  ? client_id 
+  : role === "freelancer" 
+  ? user_id 
+  : undefined; 
+
+  // fetch free-launcer service details
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,7 +57,6 @@ export default function Details({
     if (serviceId) fetchData();
   }, [serviceId]);
 
-  
   //handle client chat
   const handleClientChat = () => {
     setChat(true);
@@ -53,10 +65,12 @@ export default function Details({
     <div className="relative min-h-screen p-6 bg-background">
       <Card className="max-w-4xl mx-auto">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">{serviceData?.name}</CardTitle>
+          <CardTitle className="text-2xl font-bold">
+            {serviceData?.name}
+          </CardTitle>
           <p className="">{serviceData?.projectTitle}</p>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           {/* Contact Information */}
           <div className="space-y-3">
@@ -71,12 +85,16 @@ export default function Details({
             <div className="flex items-center gap-2">
               <MapPin className="w-5 h-5 " />
               <span>
-                {serviceData?.address}, {serviceData?.state}, {serviceData?.country}
+                {serviceData?.address}, {serviceData?.state},{" "}
+                {serviceData?.country}
               </span>
             </div>
             <div className="flex items-center gap-2">
               <User className="w-5 h-5 " />
-              <a href={serviceData?.linkedin} className="text-blue-600 hover:underline">
+              <a
+                href={serviceData?.linkedin}
+                className="text-blue-600 hover:underline"
+              >
                 LinkedIn Profile
               </a>
             </div>
@@ -119,22 +137,24 @@ export default function Details({
           </div>
         </CardContent>
       </Card>
-
-      {/* Fixed Chat Button */}
-      <div className="fixed bottom-6 right-6">
-        <Button 
-          onClick={handleClientChat}
-          size="lg"
-          className="shadow-lg"
-        >
-          Chat with {serviceData?.name}
-        </Button>
-      </div>
+      {freelauncer_Id && chatId === userId ? (
+        <div className="fixed bottom-6 right-6">
+          <Button onClick={handleClientChat} size="lg" className="shadow-lg">
+            Chat with {serviceData?.name}
+          </Button>
+        </div>
+      ) : (
+        ""
+      )}
 
       {/* Chat Component */}
       {chat && (
         <div className="fixed bottom-20 right-6 w-96">
-          <Chat serviceData={serviceData} userId={userId} senderName={senderName} />
+          <Chat
+            serviceData={serviceData}
+            userId={userId}
+            senderName={senderName}
+          />
         </div>
       )}
     </div>

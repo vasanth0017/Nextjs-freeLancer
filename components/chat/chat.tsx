@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 import { DefaultEventsMap } from "@socket.io/component-emitter";
 import { Trash } from "lucide-react";
 import { Button } from "../ui/button";
+import { useRef } from "react";
+
 
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 type UserIdObject = {
@@ -30,7 +32,16 @@ export default function Chat({
   const receiverName = serviceData?.name;
   const [messages, setMessages] = useState<any[]>([]);
   const [newMessage, setNewMessage] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
  
+
+  //scroll to new message
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  
   useEffect(() => {
     const fetchMessages = async () => {
       const response: any = await getMessage(contractId);
@@ -40,6 +51,7 @@ export default function Chat({
         clientKey: msg.id || `${Date.now()}-${Math.random()}`,
       }));
       setMessages(response);
+      setTimeout(scrollToBottom, 100);
     };
     fetchMessages();
   }, [contractId]);
@@ -61,6 +73,7 @@ export default function Chat({
           if (messageExists) return prev;
           return [...prev, message];
         });
+        setTimeout(scrollToBottom, 100);
       });
 
       socket.on("disconnect", () => {
@@ -179,6 +192,7 @@ export default function Chat({
             </div>
           );
         })}
+         <div ref={messagesEndRef} />
       </div>
 
       <div className="flex items-center gap-2">
