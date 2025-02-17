@@ -54,7 +54,6 @@ export default function MyServices({
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  
   //handle router
   const handleRedirect = (action: "serviceList" | "addService") => {
     if (action === "serviceList") {
@@ -97,22 +96,28 @@ export default function MyServices({
               onClick={() => handleRedirect("serviceList")}
               className="flex items-center gap-2"
             >
-              <ArrowLeft className="h-4 w-4 mr-1 " />
               {redirectLoad ? (
                 <Loader className="animate-spin w-5 h-5" />
               ) : (
-                "Service List"
+                <>
+                  {" "}
+                  <ArrowLeft className="h-4 w-4 mr-1 " />
+                  Service List
+                </>
               )}
             </Button>
             <Button
               onClick={() => handleRedirect("addService")}
               className="flex items-center gap-2"
             >
-              <Plus />
               {redirectLoadpage ? (
                 <Loader className="animate-spin w-5 h-5" />
               ) : (
-                "Add service"
+                <>
+                  {" "}
+                  <Plus />
+                  Add service
+                </>
               )}
             </Button>
           </div>
@@ -207,9 +212,7 @@ export default function MyServices({
                           <ExternalLink className="w-4 h-4" />
                         </a>
 
-                        <Button
-                          className="w-full transition-all duration-300"
-                        >
+                        <Button className="w-full transition-all duration-300">
                           View Details
                         </Button>
                       </div>

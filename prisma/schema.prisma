@@ -45,7 +45,8 @@ model User {
   resetToken           String?  
   resetTokenExpiry     DateTime?
   phoneNumber          String?   
-  address              String?   
+  address              String?
+  company              String?
   accounts             Account[]
   sessions             Session[]
   services             FreelancerService[] @relation("freelauncerService")

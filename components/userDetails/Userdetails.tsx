@@ -34,11 +34,12 @@ export default function UserDetail({ email }: { email: string }) {
   const handleSave = async (index: number) => {
     const user = users[index];
     if (!user?.id) return;
-    const id = user.id;
-    const name = user.name;
-    const email = user.email;
-    const phoneNumber = user.phoneNumber;
-    const address = user.address;
+    const id = user?.id;
+    const name = user?.name;
+    const email = user?.email;
+    const phoneNumber = user?.phoneNumber;
+    const address = user?.address;
+    const company = user?.company;
     try {
       setLoading(true);
       const updatedUser = await UpdateAccountDetails({
@@ -47,6 +48,7 @@ export default function UserDetail({ email }: { email: string }) {
         name,
         phoneNumber,
         address,
+        company,
       });
       toast.success("Changes Saved");
       const updatedUsers = [...users];
@@ -89,7 +91,7 @@ export default function UserDetail({ email }: { email: string }) {
                 <>
                   <Input
                     type="text"
-                    value={user.name}
+                    value={user.name || ""}
                     onChange={(e) =>
                       handleChange(index, "name", e.target.value)
                     }
@@ -97,7 +99,7 @@ export default function UserDetail({ email }: { email: string }) {
                   />
                   <Input
                     type="text"
-                    value={user.email}
+                    value={user.email || ""}
                     onChange={(e) =>
                       handleChange(index, "email", e.target.value)
                     }
@@ -134,7 +136,7 @@ export default function UserDetail({ email }: { email: string }) {
                 <strong>Phone:</strong>
                 <Input
                   type="text"
-                  value={user.phoneNumber}
+                  value={user.phoneNumber || ""}
                   onChange={(e) =>
                     handleChange(index, "phoneNumber", e.target.value)
                   }
@@ -146,9 +148,20 @@ export default function UserDetail({ email }: { email: string }) {
                 <strong>Address:</strong>
                 <Input
                   type="text"
-                  value={user.address}
+                  value={user.address || ""}
                   onChange={(e) =>
                     handleChange(index, "address", e.target.value)
+                  }
+                  className="border p-2 w-full rounded"
+                />
+              </Label>
+              <Label className="block mt-2">
+                <strong>Company:</strong>
+                <Input
+                  type="text"
+                  value={user.company || ""}
+                  onChange={(e) =>
+                    handleChange(index, "company", e.target.value)
                   }
                   className="border p-2 w-full rounded"
                 />
@@ -161,6 +174,9 @@ export default function UserDetail({ email }: { email: string }) {
               </p>
               <p>
                 <strong>Address :</strong> {user.address || "Not provided"}
+              </p>
+              <p>
+                <strong>Compnay :</strong> {user.company || "Not provided"}
               </p>
             </>
           )}

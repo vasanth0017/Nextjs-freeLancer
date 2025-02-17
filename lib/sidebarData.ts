@@ -72,6 +72,10 @@ export  function sidebarData  (session: any) {
         ...(session?.user?.role === "freelancer" && {
           items: [
             {
+              title: "All Services",
+              url: "/service-listing",
+            },
+            {
               title: "My Services",
               url: "/my-services",
             },

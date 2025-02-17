@@ -39,6 +39,7 @@ export const UpdateAccountDetails = async ({
   name,
   phoneNumber,
   address,
+  company,
 }: any) => {
   return await Fetch.updateJSON("/user-account/update", {
     id,
@@ -46,6 +47,7 @@ export const UpdateAccountDetails = async ({
     name,
     phoneNumber,
     address,
+    company,
   });
 };
 

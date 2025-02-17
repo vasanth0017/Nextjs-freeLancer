@@ -3,7 +3,7 @@ import db from "@/prisma/db";
 const handler = async (req: any, res: any) => {
 
   if (req.method !== "PUT") return res.status(405).end();
-  const {id, email, name, phoneNumber, address} = req.body
+  const {id, email, name, phoneNumber, address, company} = req.body
 
   try {
     const existingEntry = await db.user.findFirst({
@@ -20,7 +20,8 @@ const handler = async (req: any, res: any) => {
             name:name, 
             email:email,
             phoneNumber:phoneNumber,
-            address:address
+            address:address,
+            company:company
 
         },
       })
