@@ -27,10 +27,12 @@ export const resetPassword = async (token: any, newPassword: any) => {
   return await Fetch.postJSON("/auth/reset-password", { token, newPassword });
 };
 
-//get account details
-export const getAccountDetails = async (email: any) => {
-  return await Fetch.getJSON(`/user-account/get?email=${email}`);
+// Get account details using email or id
+export const getAccountDetails = async (params: { email?: string; id?: string }) => {
+  const queryParam = params.id ? `id=${params.id}` : `email=${params.email}`;
+  return await Fetch.getJSON(`/user-account/get?${queryParam}`);
 };
+
 
 //update account details
 export const UpdateAccountDetails = async ({

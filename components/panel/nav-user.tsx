@@ -28,6 +28,7 @@ import {
 import { signOut } from "next-auth/react";
 import router from "next/router";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function NavUser({
   user,
@@ -42,6 +43,7 @@ export function NavUser({
   const email = user.email;
   const firstTwoLetters =
     email && email.length >= 2 ? email.substring(0, 2).toUpperCase() : "WE";
+  const router = useRouter();
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -102,7 +104,7 @@ export function NavUser({
               className="crusor-pointer"
               onClick={() => {
                 signOut();
-                router.replace("/sign-in");
+                router.push("/sign-in");
               }}
             >
               <LogOut />

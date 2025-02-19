@@ -89,7 +89,7 @@ export default function ServiceContract({
       try {
         setIsLoading(true);
         setError(null);
-        const response: any = await getAccountDetails(email);
+        const response: any = await getAccountDetails({email:email});
         setUserDetail(response);
       } catch (error) {
         setError("Error fetching user details.");

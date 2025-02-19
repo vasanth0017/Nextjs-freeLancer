@@ -1,5 +1,5 @@
 "use client";
-import { getServiceDetails } from "@/services/apicall";
+import { getAccountDetails, getServiceDetails } from "@/services/apicall";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -33,6 +33,7 @@ export default function Details({
   const [isLoading, setIsLoading] = useState(true);
   const [chat, setChat] = useState(false);
   const [redirectLoad, setRedirectLoad] = useState(false);
+  const [userDetail, setUserDetail] = useState<any[]>([]);
   const router = useRouter();
   //this for restrict chat for others
   const freelauncer_Id =
@@ -42,6 +43,9 @@ export default function Details({
   const chatId =
     role === "client" ? client_id : role === "freelancer" ? user_id : undefined;
 
+  //assume clinetid as user for get client details
+  const user = serviceData?.contracts?.[0]?.clientId;
+  console.log("userDetail", userDetail);
   // fetch free-launcer service details
   useEffect(() => {
     const fetchData = async () => {
@@ -65,6 +69,21 @@ export default function Details({
     if (serviceId) fetchData();
   }, [serviceId]);
 
+  //fetch user account details for save client information
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const response: any = await getAccountDetails({ id: user });
+        setUserDetail(response);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    if (user) fetchData();
+  }, [user]);
   //handle client chat
   const handleClientChat = () => {
     setChat(true);
@@ -82,7 +101,11 @@ export default function Details({
         </div>
       ) : (
         <>
-          <Button variant="secondary" onClick={handleredirect} className="w-fit mx-6 p-3">
+          <Button
+            variant="secondary"
+            onClick={handleredirect}
+            className="w-fit mx-6 p-3"
+          >
             {redirectLoad ? (
               <Loader className="animate-spin w-5 h-5" />
             ) : (
@@ -131,19 +154,21 @@ export default function Details({
                   </div>
 
                   {/* Client Section */}
-                  <div className="flex flex-col items-center">
-                    <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center mb-2">
-                      <span className="text-2xl font-bold text-blue-600">
-                        {senderName?.charAt(0).toUpperCase()}
+                  {userDetail?.map((data: any) => (
+                    <div key={data.id} className="flex flex-col items-center">
+                      <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center mb-2">
+                        <span className="text-2xl font-bold text-blue-600">
+                          {data?.name.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <span className="text-sm font-medium text-gray-600">
+                        Client
+                      </span>
+                      <span className="text-sm font-semibold mt-1">
+                        {data?.name}
                       </span>
                     </div>
-                    <span className="text-sm font-medium text-gray-600">
-                      Client
-                    </span>
-                    <span className="text-sm font-semibold mt-1">
-                      {senderName}
-                    </span>
-                  </div>
+                  ))}
                 </div>
               ) : (
                 ""
