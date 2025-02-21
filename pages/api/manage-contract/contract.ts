@@ -14,6 +14,7 @@ const handler = async(req:any, res:any)=> {
     status,
     proposals,
     agreement,
+    dueDate,
   } = req.body;
   try {
     const Service = await db.contract.create({
@@ -28,6 +29,7 @@ const handler = async(req:any, res:any)=> {
         status,
         proposals,
         agreement,
+        dueDate,
       },
     });
     res.status(201).json(Service);

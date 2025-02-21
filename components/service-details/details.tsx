@@ -17,6 +17,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import Link from "next/link";
+import { ProgressDemo } from "../progress-bar/progress-bar";
 
 export default function Details({
   userId,
@@ -45,7 +46,9 @@ export default function Details({
 
   //assume clinetid as user for get client details
   const user = serviceData?.contracts?.[0]?.clientId;
-  console.log("userDetail", userDetail);
+  const hours = serviceData?.contracts?.[0]?.dueDate;
+
+  const oneDayInSeconds = hours * 60 * 60;
   // fetch free-launcer service details
   useEffect(() => {
     const fetchData = async () => {
@@ -146,13 +149,17 @@ export default function Details({
                     </span>
                   </div>
 
-                  {/* Status Badge */}
-                  <div className="px-4 py-2 rounded-full bg-background border">
-                    <span className="text-blue-600 font-medium">
-                      {serviceData?.status}
-                    </span>
+                  {/* Status Badge and Progress */}
+                  <div className="flex flex-col items-center w-full gap-2">
+                    <div className="px-4 py-2 rounded-full bg-background border">
+                      <span className="text-blue-600 font-medium">
+                        {serviceData?.status}
+                      </span>
+                    </div>
+                    {serviceData?.status === "pending" && (
+                      <ProgressDemo durationInSeconds={oneDayInSeconds} />
+                    )}
                   </div>
-
                   {/* Client Section */}
                   {userDetail?.map((data: any) => (
                     <div key={data.id} className="flex flex-col items-center">

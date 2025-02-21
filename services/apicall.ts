@@ -162,6 +162,7 @@ export const createContract = async ({
   status,
   proposals,
   agreement,
+  dueDate,
 }: any) => {
   return await Fetch.postJSON("/manage-contract/contract", {
     userId,
@@ -174,6 +175,7 @@ export const createContract = async ({
     status,
     proposals,
     agreement,
+    dueDate,
   });
 };
 
@@ -195,6 +197,7 @@ export const upadteContract = async ({
   status,
   proposals,
   agreement,
+  dueDate,
 }: any) => {
   return await Fetch.updateJSON("/manage-contract/update-contract", {
     contractId,
@@ -208,6 +211,7 @@ export const upadteContract = async ({
     status,
     proposals,
     agreement,
+    dueDate,
   });
 };
 

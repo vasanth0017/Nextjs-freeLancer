@@ -14,6 +14,7 @@ const handler = async (req: any, res: any) => {
     status,
     proposals,
     agreement,
+    dueDate,
   } = req.body;
  
   if (!contractId) {
@@ -33,6 +34,7 @@ const handler = async (req: any, res: any) => {
         status,
         proposals,
         agreement,
+        dueDate,
       },
     });
     res.status(201).json(Service);

@@ -19,7 +19,7 @@ export default function UserDetail({ email }: { email: string }) {
       try {
         setIsLoading(true);
         setError(null);
-        const response = await getAccountDetails(email);
+        const response = await getAccountDetails({email:email});
         setUsers(response);
       } catch (error) {
         setError("Error fetching user details.");

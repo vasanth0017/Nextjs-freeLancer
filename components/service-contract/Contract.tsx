@@ -43,9 +43,8 @@ export default function ServiceContract({
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [redirectLoad, setRedirectLoad] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [editIndex, setEditIndex] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState("contract");
+  const [edit, setEdit] = useState(false);
 
   //assign userId to id for send contract clientId
   const id = userId;
@@ -59,6 +58,10 @@ export default function ServiceContract({
       };
       return { ...prev, contracts: updatedContracts };
     });
+  };
+  //handle Edit
+  const handleEdit = () => {
+    setEdit(true);
   };
 
   //fetch free-launcer service details
@@ -89,7 +92,7 @@ export default function ServiceContract({
       try {
         setIsLoading(true);
         setError(null);
-        const response: any = await getAccountDetails({email:email});
+        const response: any = await getAccountDetails({ email: email });
         setUserDetail(response);
       } catch (error) {
         setError("Error fetching user details.");
@@ -111,7 +114,7 @@ export default function ServiceContract({
     serviceData?.contracts?.[0]?.amount || serviceData.amount;
   const clientproposals = serviceData?.contracts?.[0]?.proposals || null;
   const clientagreement = serviceData?.contracts?.[0]?.agreement || null;
-
+  const duedate =  serviceData?.contracts?.[0]?.dueDate || null;
   //handle update contract changes
   const handleUpadate = async () => {
     const contractId = serviceData?.contracts?.[0]?.id || null;
@@ -125,7 +128,7 @@ export default function ServiceContract({
     const status = serviceData?.status;
     const proposals = clientproposals;
     const agreement = clientagreement;
-
+    const dueDate  = duedate
     try {
       setLoading(true);
       await upadteContract({
@@ -140,12 +143,14 @@ export default function ServiceContract({
         status,
         proposals,
         agreement,
+        dueDate,
       });
       toast.success("Successfully Updated");
     } catch (error) {
       toast.error("Error during update the contract details");
     }
     setLoading(false);
+    setEdit(false);
   };
   //save contract details
   const handlesave = async () => {
@@ -162,7 +167,7 @@ export default function ServiceContract({
     const status = serviceData?.status;
     const proposals = clientproposals;
     const agreement = clientagreement;
-
+    const dueDate  = duedate
     try {
       setLoading(true);
       await createContract({
@@ -176,6 +181,7 @@ export default function ServiceContract({
         status,
         proposals,
         agreement,
+        dueDate
       });
       toast.success("contract created successfully");
     } catch (error) {
@@ -187,6 +193,17 @@ export default function ServiceContract({
   const handleredirect = () => {
     setRedirectLoad(true);
     router.back();
+  };
+
+  // Convert hours to readable format (Days + Hours)
+  const getTimePreview = (hours: any) => {
+    const days = Math.floor(hours / 24);
+    const remainingHours = hours % 24;
+    let preview = "";
+    if (days > 0) preview += `${days} Day${days > 1 ? "s" : ""}`;
+    if (remainingHours > 0) preview += ` ${remainingHours} Hours`;
+
+    return preview.trim();
   };
 
   return (
@@ -373,7 +390,22 @@ export default function ServiceContract({
                     <CardTitle className="text-2xl font-bold">
                       Contract Details
                     </CardTitle>
-                    {isData ? (
+                    {isData && !edit ? (
+                      <Button
+                        variant="outline"
+                        onClick={handleEdit}
+                        className="flex items-center gap-2"
+                      >
+                        {loading ? (
+                          <Loader className="animate-spin w-5 h-5" />
+                        ) : (
+                          <>
+                            <Edit2 className="w-4 h-4" />
+                            Edit
+                          </>
+                        )}
+                      </Button>
+                    ) : isData && edit ? (
                       <Button
                         variant="outline"
                         onClick={handleUpadate}
@@ -393,8 +425,7 @@ export default function ServiceContract({
                     )}
                   </CardHeader>
                   <CardContent>
-                    {serviceData?.contracts &&
-                    serviceData.contracts.length > 0 ? (
+                    {edit ? (
                       serviceData.contracts.map((data: any, index: number) => (
                         <div key={index} className="space-y-6">
                           <div className="grid md:grid-cols-2 gap-6">
@@ -411,7 +442,7 @@ export default function ServiceContract({
                                 Client Amount
                               </h3>
                               <Input
-                                value={data.amount || ""}
+                                value={data?.amount || ""}
                                 onChange={(e) =>
                                   handleChange(index, "amount", e.target.value)
                                 }
@@ -423,7 +454,7 @@ export default function ServiceContract({
                           <div>
                             <h3 className="font-semibold mb-2">Proposals</h3>
                             <Textarea
-                              value={data.proposals || ""}
+                              value={data?.proposals || ""}
                               onChange={(e) =>
                                 handleChange(index, "proposals", e.target.value)
                               }
@@ -435,7 +466,7 @@ export default function ServiceContract({
                           <div>
                             <h3 className="font-semibold mb-2">Agreement</h3>
                             <Textarea
-                              value={data.agreement || ""}
+                              value={data?.agreement || ""}
                               onChange={(e) =>
                                 handleChange(index, "agreement", e.target.value)
                               }
@@ -443,8 +474,70 @@ export default function ServiceContract({
                               className="min-h-[100px]"
                             />
                           </div>
+                          {/* Input Field for Hours */}
+                          <div className="flex flex-col items-center gap-2">
+                            <label className="text-lg font-medium">
+                              Enter Hours:
+                            </label>
+                            <input
+                              type="number"
+                              value={data?.dueDate || ""}
+                              onChange={(e) =>
+                                handleChange(index, "dueDate", e.target.value)
+                              }
+                              min="1"
+                              className="border p-2 rounded w-32 text-center"
+                            />
+                          </div>
+
+                          {/* Time Preview */}
+                          <p className="text-lg font-semibold">
+                            Time Selected: {getTimePreview(data?.dueDate)}
+                          </p>
                         </div>
                       ))
+                    ) : serviceData?.contracts &&
+                      serviceData.contracts.length > 0 ? (
+                      // Show Empty Input Fields if No Contract Exists
+                      <div className="space-y-6">
+                        <div className="grid md:grid-cols-2 gap-6">
+                          <div>
+                            <h3 className="font-semibold mb-2">
+                              Freelancer Amounttttt
+                            </h3>
+                            <p className="text-2xl font-bold text-green-600">
+                              ${serviceData?.amount}
+                            </p>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold mb-2">
+                              Client Amount
+                            </h3>
+                            <p className="text-2xl font-bold text-green-600">
+                              ${serviceData?.contracts?.[0]?.amount}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div>
+                          <p className="text-2xl font-bold text-green-600">
+                            {serviceData?.contracts?.[0]?.proposals}
+                          </p>
+                        </div>
+
+                        <div>
+                          <h3 className="font-semibold mb-2">Agreement</h3>
+                          <p className="text-2xl font-bold text-green-600">
+                            {serviceData?.contracts?.[0]?.agreement}
+                          </p>
+                        </div>
+                  
+                        {/* Time Preview */}
+                        <p className="text-lg font-semibold">
+                          Time Selected:{" "}
+                          {getTimePreview(serviceData?.contracts[0]?.dueDate)}
+                        </p>
+                      </div>
                     ) : (
                       // Show Empty Input Fields if No Contract Exists
                       <div className="space-y-6">
@@ -494,6 +587,27 @@ export default function ServiceContract({
                             className="min-h-[100px]"
                           />
                         </div>
+                        {/* Input Field for Hours */}
+                        <div className="flex flex-col items-center gap-2">
+                          <label className="text-lg font-medium">
+                            Enter Hours:
+                          </label>
+                          <Input
+                            type="number"
+                            value=""
+                            onChange={(e) =>
+                              handleChange(0, "dueDate", e.target.value)
+                            }
+                            min="1"
+                            className="border p-2 rounded w-32 text-center"
+                          />
+                        </div>
+
+                        {/* Time Preview */}
+                        <p className="text-lg font-semibold">
+                          Time Selected:{" "}
+                          {getTimePreview(serviceData?.contracts?.[0]?.dueDate)}
+                        </p>
                       </div>
                     )}
                   </CardContent>

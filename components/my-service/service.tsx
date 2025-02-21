@@ -70,7 +70,7 @@ export default function MyServices({
       try {
         setIsLoading(true);
         setError(null);
-        const response: any = await getAccountDetails(email);
+        const response: any = await getAccountDetails({email:email});
         setUsers(response);
       } catch (error) {
         setError("Error fetching user details.");

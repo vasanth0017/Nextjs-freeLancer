@@ -103,7 +103,7 @@ model Contract {
 
   proposals      Json?    
   agreement      Json?    
-
+  dueDate        String?
   milestones     Milestone[] 
 
   createdAt      DateTime @default(now())
